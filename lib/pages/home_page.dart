@@ -54,6 +54,7 @@ class _HomeState extends State<Home> {
                         Text(
                           'Dashboard',
                           style: TextStyle(
+                              fontSize: 12,
                               color: currentTab == 0
                                   ? Color(0xFF2B2D42)
                                   : Colors.grey),
@@ -65,7 +66,7 @@ class _HomeState extends State<Home> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       MaterialButton(
-                        minWidth: 110,
+                        minWidth: 100,
                         onPressed: () {
                           setState(() {
                             currentScreen = Transaksi();
@@ -84,6 +85,7 @@ class _HomeState extends State<Home> {
                             Text(
                               'Transaksi',
                               style: TextStyle(
+                                  fontSize: 12,
                                   color: currentTab == 1
                                       ? Color(0xFF2B2D42)
                                       : Colors.grey),
@@ -116,6 +118,7 @@ class _HomeState extends State<Home> {
                         Text(
                           'Tracking',
                           style: TextStyle(
+                              fontSize: 12,
                               color:
                                   currentTab == 2 ? Colors.black : Colors.grey),
                         ),
@@ -123,7 +126,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   MaterialButton(
-                    minWidth: 100,
+                    minWidth: 88,
                     onPressed: () {
                       setState(() {
                         currentScreen = Setting();
@@ -140,6 +143,7 @@ class _HomeState extends State<Home> {
                         Text(
                           'Setting',
                           style: TextStyle(
+                              fontSize: 12,
                               color:
                                   currentTab == 3 ? Colors.black : Colors.grey),
                         ),

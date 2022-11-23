@@ -75,7 +75,13 @@ class _DashboardState extends State<Dashboard> {
                   padding: EdgeInsets.symmetric(horizontal: 45, vertical: 40),
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(5.0))),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Tracking(),
+                    ));
+              },
             ),
           ),
           Padding(
@@ -87,7 +93,13 @@ class _DashboardState extends State<Dashboard> {
                   padding: EdgeInsets.symmetric(horizontal: 45, vertical: 40),
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(5.0))),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Transaksi(),
+                    ));
+              },
             ),
           ),
           Padding(
@@ -99,20 +111,79 @@ class _DashboardState extends State<Dashboard> {
                   padding: EdgeInsets.symmetric(horizontal: 45, vertical: 40),
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(5.0))),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Tracking(),
+                    ));
+              },
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(10, 420, 15, 0),
-            child: TextButton(
-              child: const Text(
-                'Tunggu Konfirmasi',
-                style: TextStyle(
-                  color: Color(0xFF8D99AE),
-                  fontSize: 10,
-                ),
-              ),
-              onPressed: () {},
+            padding: EdgeInsets.fromLTRB(20, 435, 15, 0),
+            child: RichText(
+              text: TextSpan(children: [
+                TextSpan(
+                    text: 'Tunggu Konfirmasi',
+                    style: FontButton.copyWith(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF8D99AE)),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        //Navigator.push(
+                        // context,
+                        //MaterialPageRoute(
+                        //builder: (context) => forgot(),
+                        //));
+                      }),
+              ]),
+              //textAlign: TextAlign.right,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(174, 435, 15, 0),
+            child: RichText(
+              text: TextSpan(children: [
+                TextSpan(
+                    text: 'Proses',
+                    style: FontButton.copyWith(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF8D99AE)),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        //Navigator.push(
+                        // context,
+                        //MaterialPageRoute(
+                        //builder: (context) => forgot(),
+                        //));
+                      }),
+              ]),
+              //textAlign: TextAlign.right,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(304, 435, 15, 0),
+            child: RichText(
+              text: TextSpan(children: [
+                TextSpan(
+                    text: 'Selesai',
+                    style: FontButton.copyWith(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF8D99AE)),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        //Navigator.push(
+                        // context,
+                        //MaterialPageRoute(
+                        //builder: (context) => forgot(),
+                        //));
+                      }),
+              ]),
+              //textAlign: TextAlign.right,
             ),
           ),
         ]));
