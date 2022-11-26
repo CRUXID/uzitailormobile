@@ -77,10 +77,7 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: new BorderRadius.circular(5.0))),
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Tracking(),
-                    ));
+                    context, MaterialPageRoute(builder: (context) => track()));
               },
             ),
           ),
@@ -95,10 +92,7 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: new BorderRadius.circular(5.0))),
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Transaksi(),
-                    ));
+                    context, MaterialPageRoute(builder: (context) => track()));
               },
             ),
           ),
@@ -113,10 +107,7 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: new BorderRadius.circular(5.0))),
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Tracking(),
-                    ));
+                    context, MaterialPageRoute(builder: (context) => track()));
               },
             ),
           ),
@@ -125,19 +116,12 @@ class _DashboardState extends State<Dashboard> {
             child: RichText(
               text: TextSpan(children: [
                 TextSpan(
-                    text: 'Tunggu Konfirmasi',
-                    style: FontButton.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF8D99AE)),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        //Navigator.push(
-                        // context,
-                        //MaterialPageRoute(
-                        //builder: (context) => forgot(),
-                        //));
-                      }),
+                  text: 'Tunggu Konfirmasi',
+                  style: FontButton.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF8D99AE)),
+                ),
               ]),
               //textAlign: TextAlign.right,
             ),
@@ -147,19 +131,12 @@ class _DashboardState extends State<Dashboard> {
             child: RichText(
               text: TextSpan(children: [
                 TextSpan(
-                    text: 'Proses',
-                    style: FontButton.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF8D99AE)),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        //Navigator.push(
-                        // context,
-                        //MaterialPageRoute(
-                        //builder: (context) => forgot(),
-                        //));
-                      }),
+                  text: 'Proses',
+                  style: FontButton.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF8D99AE)),
+                ),
               ]),
               //textAlign: TextAlign.right,
             ),
@@ -169,19 +146,12 @@ class _DashboardState extends State<Dashboard> {
             child: RichText(
               text: TextSpan(children: [
                 TextSpan(
-                    text: 'Selesai',
-                    style: FontButton.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF8D99AE)),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        //Navigator.push(
-                        // context,
-                        //MaterialPageRoute(
-                        //builder: (context) => forgot(),
-                        //));
-                      }),
+                  text: 'Selesai',
+                  style: FontButton.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF8D99AE)),
+                ),
               ]),
               //textAlign: TextAlign.right,
             ),
