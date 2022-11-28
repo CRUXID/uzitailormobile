@@ -67,50 +67,48 @@ class _DashboardState extends State<Dashboard> {
                 thickness: 1,
               )),
           Padding(
-            padding: EdgeInsets.fromLTRB(15, 330, 0, 0),
-            child: ElevatedButton(
-              child: const Text('1'),
-              style: TextButton.styleFrom(
-                  backgroundColor: Color(0xFF8D99AE),
-                  padding: EdgeInsets.symmetric(horizontal: 45, vertical: 40),
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0))),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => track()));
-              },
-            ),
-          ),
+              padding: EdgeInsets.fromLTRB(15, 330, 0, 0),
+              child: Container(
+                color: Color(0xFF8D99AE),
+                height: 100,
+                width: 100,
+                child: TextButton(
+                  child: Icon(Icons.add_to_home_screen_outlined,
+                      color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => track()));
+                  },
+                ),
+              )),
           Padding(
-            padding: EdgeInsets.fromLTRB(140, 330, 0, 0),
-            child: ElevatedButton(
-              child: const Text('2'),
-              style: TextButton.styleFrom(
-                  backgroundColor: Color(0xFF8D99AE),
-                  padding: EdgeInsets.symmetric(horizontal: 45, vertical: 40),
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0))),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => track()));
-              },
-            ),
-          ),
+              padding: EdgeInsets.fromLTRB(140, 330, 0, 0),
+              child: Container(
+                color: Color(0xFF8D99AE),
+                height: 100,
+                width: 100,
+                child: TextButton(
+                  child: Icon(Icons.av_timer_outlined, color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => track()));
+                  },
+                ),
+              )),
           Padding(
-            padding: EdgeInsets.fromLTRB(270, 330, 15, 0),
-            child: ElevatedButton(
-              child: const Text('3'),
-              style: TextButton.styleFrom(
-                  backgroundColor: Color(0xFF8D99AE),
-                  padding: EdgeInsets.symmetric(horizontal: 45, vertical: 40),
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0))),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => track()));
-              },
-            ),
-          ),
+              padding: EdgeInsets.fromLTRB(270, 330, 15, 0),
+              child: Container(
+                color: Color(0xFF8D99AE),
+                height: 100,
+                width: 100,
+                child: TextButton(
+                  child: Icon(Icons.checklist, color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => track()));
+                  },
+                ),
+              )),
           Padding(
             padding: EdgeInsets.fromLTRB(20, 435, 15, 0),
             child: RichText(

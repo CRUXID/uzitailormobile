@@ -31,7 +31,7 @@ class _TrackingState extends State<Tracking>
             body: TabBarView(controller: _tabController, children: [
               ListView(padding: const EdgeInsets.all(10), children: <Widget>[
                 Container(
-                    height: 255,
+                    height: 240,
                     color: Color(0xFFEDF2F4),
 
                     //child: const Center
@@ -41,23 +41,27 @@ class _TrackingState extends State<Tracking>
                           SizedBox(
                             height: 5.0,
                           ),
-                          Text(
-                            "   Kamis, 22 Oktober 2022",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
+                          Text.rich(
+                            TextSpan(
+                                text: "   Kamis, 22 Oktober 2022",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: "                Menunggu Konfirmasi",
+                                    style: TextStyle(
+                                        color: Color(0xFF414460),
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 12),
+                                  )
+                                ]),
                           ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            "    Menunggu Konfirmasi",
-                            style: TextStyle(
-                                color: Color(0xFF414460),
-                                fontWeight: FontWeight.w200,
-                                fontSize: 11),
-                          ),
+                          //SizedBox(
+                          //height: 5.0,
+                          //),
+
                           Divider(
                             color: Color(0xFF8D99AE),
                             thickness: 1,
@@ -137,7 +141,7 @@ class _TrackingState extends State<Tracking>
                   height: 15.0,
                 ),
                 Container(
-                    height: 255,
+                    height: 240,
                     color: Color(0xFFEDF2F4),
 
                     //child: const Center
@@ -147,22 +151,22 @@ class _TrackingState extends State<Tracking>
                           SizedBox(
                             height: 5.0,
                           ),
-                          Text(
-                            "   Jumat, 23 Oktober 2022",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            "    Menunggu Konfirmasi",
-                            style: TextStyle(
-                                color: Color(0xFF414460),
-                                fontWeight: FontWeight.w200,
-                                fontSize: 11),
+                          Text.rich(
+                            TextSpan(
+                                text: "   Jumat, 23 Oktober 2022",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: "                Menunggu Konfirmasi",
+                                    style: TextStyle(
+                                        color: Color(0xFF414460),
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 12),
+                                  )
+                                ]),
                           ),
                           Divider(
                             color: Color(0xFF8D99AE),
@@ -264,7 +268,7 @@ class _TrackingState extends State<Tracking>
               //),
               ListView(padding: const EdgeInsets.all(10), children: <Widget>[
                 Container(
-                    height: 255,
+                    height: 240,
                     color: Color(0xFFEDF2F4),
 
                     //child: const Center
@@ -274,22 +278,23 @@ class _TrackingState extends State<Tracking>
                           SizedBox(
                             height: 5.0,
                           ),
-                          Text(
-                            "   Kamis, 22 Oktober 2022",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            "    Sedang Diproses",
-                            style: TextStyle(
-                                color: Color(0xFF414460),
-                                fontWeight: FontWeight.w200,
-                                fontSize: 11),
+                          Text.rich(
+                            TextSpan(
+                                text: "   Kamis, 22 Oktober 2022",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text:
+                                        "                          Sedang Diproses",
+                                    style: TextStyle(
+                                        color: Color(0xFF414460),
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 12),
+                                  )
+                                ]),
                           ),
                           Divider(
                             color: Color(0xFF8D99AE),
@@ -373,7 +378,7 @@ class _TrackingState extends State<Tracking>
               //),
               ListView(padding: const EdgeInsets.all(10), children: <Widget>[
                 Container(
-                    height: 255,
+                    height: 240,
                     color: Color(0xFFEDF2F4),
 
                     //child: const Center
@@ -383,22 +388,23 @@ class _TrackingState extends State<Tracking>
                           SizedBox(
                             height: 5.0,
                           ),
-                          Text(
-                            "   Kamis, 22 Oktober 2022",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            "    Selesai",
-                            style: TextStyle(
-                                color: Color(0xFF414460),
-                                fontWeight: FontWeight.w200,
-                                fontSize: 11),
+                          Text.rich(
+                            TextSpan(
+                                text: "   Kamis, 22 Oktober 2022",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text:
+                                        "                                            Selesai",
+                                    style: TextStyle(
+                                        color: Color(0xFF414460),
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 12),
+                                  )
+                                ]),
                           ),
                           Divider(
                             color: Color(0xFF8D99AE),
@@ -481,7 +487,7 @@ class _TrackingState extends State<Tracking>
               //),
               ListView(padding: const EdgeInsets.all(10), children: <Widget>[
                 Container(
-                    height: 16,
+                    height: 160,
                     color: Color(0xFFEDF2F4),
 
                     //child: const Center
@@ -491,12 +497,14 @@ class _TrackingState extends State<Tracking>
                           SizedBox(
                             height: 5.0,
                           ),
-                          Text(
-                            "   Kamis, 22 Oktober 2022         ",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
+                          Text.rich(
+                            TextSpan(
+                              text: "   Kamis, 22 Oktober 2022         ",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                            ),
                           ),
                           SizedBox(
                             height: 5.0,
@@ -526,34 +534,24 @@ class _TrackingState extends State<Tracking>
                             color: Color(0xFF8D99AE),
                             thickness: 1,
                           ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          RichText(
-                            text: TextSpan(children: [
-                              TextSpan(
-                                  text: '   Detail Riwayat Pesanan',
-                                  style: FontButton.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w200,
-                                      color: Color(0xFF8D99AE)),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => forgot(),
-                                          ));
-                                    }),
-                            ]),
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Divider(
-                            color: Color(0xFF8D99AE),
-                            thickness: 1,
-                          ),
+                          Padding(
+                              padding: EdgeInsets.only(left: 190),
+                              child: ElevatedButton(
+                                child: const Text(
+                                  'Detail Pesanan',
+                                  style: TextStyle(color: Color(0xFFEDF2F4)),
+                                ),
+                                style: TextButton.styleFrom(
+                                    backgroundColor: Color(0xFFD90429),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 30),
+                                    shape: new RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(5.0))),
+                                onPressed: () {
+                                  //loginSumbimt();
+                                },
+                              )),
                         ]))
               ]),
             ])));
