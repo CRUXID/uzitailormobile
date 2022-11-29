@@ -29,6 +29,16 @@ class _SettingState extends State<Setting> {
                   bottomLeft: Radius.circular(150)),
             ),
           ),
+
+          Column(children: <Widget>[
+            Padding(padding: EdgeInsets.fromLTRB(370, 95, 15, 15)),
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: primaryColor,
+              child:
+                  Icon(CupertinoIcons.person_fill, size: 50, color: FifthColor),
+            ),
+          ]),
           Container(
             child: Form(
               child: Column(
@@ -77,11 +87,12 @@ class _SettingState extends State<Setting> {
                         labelText: "Password"),
                     inputFormatters: [],
                   ),
+                  SizedBox(height: 20),
                   Container(
                     height: 50,
                     alignment: Alignment.center,
                     child: ElevatedButton(
-                      child: Text('Log In'),
+                      child: Text('Submit'),
                       style: ElevatedButton.styleFrom(
                           primary: SecondaryColor,
                           shape: RoundedRectangleBorder(
