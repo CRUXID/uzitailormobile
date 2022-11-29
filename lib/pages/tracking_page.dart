@@ -61,7 +61,6 @@ class _TrackingState extends State<Tracking>
                           //SizedBox(
                           //height: 5.0,
                           //),
-
                           Divider(
                             color: Color(0xFF8D99AE),
                             thickness: 1,
@@ -549,7 +548,11 @@ class _TrackingState extends State<Tracking>
                                         borderRadius:
                                             new BorderRadius.circular(5.0))),
                                 onPressed: () {
-                                  //loginSumbimt();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => faktur(),
+                                      ));
                                 },
                               )),
                         ]))

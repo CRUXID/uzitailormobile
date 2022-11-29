@@ -88,24 +88,23 @@ class _SettingState extends State<Setting> {
                     inputFormatters: [],
                   ),
                   SizedBox(height: 20),
-                  Container(
-                    height: 50,
-                    alignment: Alignment.center,
-                    child: ElevatedButton(
-                      child: Text('Submit'),
-                      style: ElevatedButton.styleFrom(
-                          primary: SecondaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100))),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Home(),
-                            ));
-                      },
-                    ),
-                  )
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(134, 15, 10, 10),
+                      child: ElevatedButton(
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(color: Color(0xFFEDF2F4)),
+                        ),
+                        style: TextButton.styleFrom(
+                            backgroundColor: SecondaryColor,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(5.0))),
+                        onPressed: () {
+                          //loginSumbimt();
+                        },
+                      )),
                 ],
               ),
             ),
