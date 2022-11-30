@@ -5,6 +5,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  bool isObscurePassword = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,81 +31,41 @@ class _SettingState extends State<Setting> {
             ),
           ),
 
-          Column(children: <Widget>[
-            Padding(padding: EdgeInsets.fromLTRB(370, 95, 15, 15)),
-            CircleAvatar(
-              radius: 60,
-              backgroundColor: primaryColor,
-              child:
-                  Icon(CupertinoIcons.person_fill, size: 50, color: FifthColor),
-            ),
-          ]),
           Container(
-            child: Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            padding: EdgeInsets.only(left: 15, top: 70, right: 15),
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: ListView(
                 children: [
-                  SizedBox(height: 300),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person_outline),
-                        labelText: "Username"),
-                    inputFormatters: [],
+                  Center(
+                    child: Stack(
+                      children: [
+                        Container(
+                            width: 120,
+                            height: 130,
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 4, color: Colors.white),
+                                boxShadow: [
+                                  BoxShadow(
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      color: Colors.black.withOpacity(0.1))
+                                ],
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')))),
+                      ],
+                    ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 30,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.tag_faces_outlined),
-                        labelText: "Fullname"),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.house_outlined),
-                        labelText: "Alamat"),
-                    inputFormatters: [],
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.phone_android_outlined),
-                        labelText: "No Hp"),
-                    inputFormatters: [],
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        // suffixIcon: GestureDetector(
-                        //   onTap: () {
-                        //     setState(() {
-                        //       _obscureText = !_obscureText;
-                        //     });
-                        //   },
-                        //   child: Icon(_obscureText
-                        //       ? Icons.visibility
-                        //       : Icons.visibility_off),
-                        // ),
-                        prefixIcon: Icon(Icons.lock_outline),
-                        labelText: "Password"),
-                    inputFormatters: [],
-                  ),
-                  SizedBox(height: 20),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(134, 15, 10, 10),
-                      child: ElevatedButton(
-                        child: const Text(
-                          'Submit',
-                          style: TextStyle(color: Color(0xFFEDF2F4)),
-                        ),
-                        style: TextButton.styleFrom(
-                            backgroundColor: SecondaryColor,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 10),
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(5.0))),
-                        onPressed: () {
-                          //loginSumbimt();
-                        },
-                      )),
+                  buildTextField("Full Name", "Demon", false),
                 ],
               ),
             ),
@@ -122,5 +83,31 @@ class _SettingState extends State<Setting> {
           //   ),
           // ),
         ]));
+  }
+
+  Widget buildTextField(
+      String labelText, String placeholder, bool isPasswordTextField) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+          obscureText: isPasswordTextField ? isObscurePassword : false,
+          decoration: InputDecoration(
+              suffixIcon: isPasswordTextField
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.remove_red_eye,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {})
+                  : null,
+              contentPadding: EdgeInsets.only(bottom: 5),
+              labelText: labelText,
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              hintText: placeholder,
+              hintStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey))),
+    );
   }
 }
