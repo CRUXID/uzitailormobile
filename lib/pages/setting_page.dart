@@ -9,63 +9,93 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text("Setting"),
+          centerTitle: true,
+          backgroundColor: SecondaryColor,
+          automaticallyImplyLeading: false,
+        ),
         backgroundColor: Colors.white,
         body: Stack(children: [
           Container(
-            alignment: Alignment.topCenter,
-            padding: const EdgeInsets.all(50),
-            child: const Text(
-              'Profile',
-              style: TextStyle(
-                  color: Color(0xFFEDF2F4),
-                  fontWeight: FontWeight.w500,
-                  fontSize: 30),
-            ),
-            width: double.infinity,
-            height: 250,
-            decoration: const BoxDecoration(
-              color: Color(0xFFEF233C),
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(150),
-                  bottomLeft: Radius.circular(150)),
-            ),
-          ),
-
-          Container(
-            padding: EdgeInsets.only(left: 15, top: 70, right: 15),
             child: GestureDetector(
               onTap: () {
                 FocusScope.of(context).unfocus();
               },
               child: ListView(
+                padding: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                ),
                 children: [
+                  SizedBox(
+                    height: 30,
+                  ),
                   Center(
-                    child: Stack(
-                      children: [
-                        Container(
-                            width: 120,
-                            height: 130,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 4, color: Colors.white),
-                                boxShadow: [
-                                  BoxShadow(
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.1))
-                                ],
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')))),
-                      ],
-                    ),
+                    child: Stack(children: [
+                      Container(
+                          width: 120,
+                          height: 130,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 4, color: Colors.white),
+                              boxShadow: [
+                                BoxShadow(
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(0.1))
+                              ],
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')))),
+                    ]),
                   ),
                   SizedBox(
                     height: 30,
                   ),
-                  buildTextField("Full Name", "Demon", false),
+                  buildTextField("Username", "thorsonofodin", false),
+                  buildTextField("Full Name", "Thoriq Lukman Hakim", false),
+                  buildTextField("Address", "thoriq00@gmail.com", false),
+                  buildTextField("No HP", "080808080808", false),
+                  buildTextField("Paassword", "******", true),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(
+                              fontSize: 15,
+                              letterSpacing: 2,
+                              color: SecondaryColor),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5))),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Save",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              letterSpacing: 2),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: SecondaryColor,
+                            padding: EdgeInsets.symmetric(horizontal: 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5))),
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
@@ -98,16 +128,20 @@ class _SettingState extends State<Setting> {
                         Icons.remove_red_eye,
                         color: Colors.grey,
                       ),
-                      onPressed: () {})
+                      onPressed: () {
+                        setState(() {
+                          isObscurePassword = !isObscurePassword;
+                        });
+                      })
                   : null,
               contentPadding: EdgeInsets.only(bottom: 5),
               labelText: labelText,
               floatingLabelBehavior: FloatingLabelBehavior.always,
               hintText: placeholder,
               hintStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey))),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: FifthColor))),
     );
   }
 }
