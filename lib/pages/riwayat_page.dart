@@ -1,18 +1,18 @@
 part of 'pages.dart';
 
-class faktur extends StatefulWidget {
-  const faktur({super.key});
+class riwayat extends StatefulWidget {
+  const riwayat({super.key});
 
   @override
-  State<faktur> createState() => _fakturState();
+  State<riwayat> createState() => _riwayatState();
 }
 
-class _fakturState extends State<faktur> {
+class _riwayatState extends State<riwayat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Faktur"),
+        title: Text("Riwayat"),
         centerTitle: true,
         backgroundColor: SecondaryColor,
       ),
@@ -339,7 +339,6 @@ class _fakturState extends State<faktur> {
                   ),
                 ]),
           ),
-          Image.asset('assets/images/barcode.jpg', height: 226.01, width: 250),
           SizedBox(
             height: 5,
           ),

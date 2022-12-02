@@ -10,6 +10,14 @@ class _SettingState extends State<Setting> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {},
+                icon: new Icon(
+                  Icons.logout_outlined,
+                  color: primaryColor,
+                ))
+          ],
           title: Text("Setting"),
           centerTitle: true,
           backgroundColor: SecondaryColor,
@@ -70,12 +78,14 @@ class _SettingState extends State<Setting> {
                         child: Text(
                           "Cancel",
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 13,
                               letterSpacing: 2,
-                              color: SecondaryColor),
+                              color: primaryColor),
                         ),
-                        style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 50),
+                        style: ElevatedButton.styleFrom(
+                            primary: ForthColor,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5))),
                       ),
@@ -84,18 +94,19 @@ class _SettingState extends State<Setting> {
                         child: Text(
                           "Save",
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 13,
                               color: Colors.white,
                               letterSpacing: 2),
                         ),
                         style: ElevatedButton.styleFrom(
                             primary: SecondaryColor,
-                            padding: EdgeInsets.symmetric(horizontal: 50),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5))),
                       )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -120,28 +131,29 @@ class _SettingState extends State<Setting> {
     return Padding(
       padding: EdgeInsets.only(bottom: 30),
       child: TextField(
-          obscureText: isPasswordTextField ? isObscurePassword : false,
-          decoration: InputDecoration(
-              suffixIcon: isPasswordTextField
-                  ? IconButton(
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isObscurePassword = !isObscurePassword;
-                        });
-                      })
-                  : null,
-              contentPadding: EdgeInsets.only(bottom: 5),
-              labelText: labelText,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              hintText: placeholder,
-              hintStyle: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: FifthColor))),
+        cursorColor: SecondaryColor,
+        obscureText: isPasswordTextField ? isObscurePassword : false,
+        decoration: InputDecoration(
+          suffixIcon: isPasswordTextField
+              ? IconButton(
+                  icon: Icon(
+                    Icons.remove_red_eye,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isObscurePassword = !isObscurePassword;
+                    });
+                  })
+              : null,
+          contentPadding: EdgeInsets.only(bottom: 5),
+          labelText: labelText,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintText: placeholder,
+          hintStyle: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w500, color: FifthColor),
+        ),
+      ),
     );
   }
 }

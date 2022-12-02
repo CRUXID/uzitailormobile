@@ -21,4 +21,5 @@ part 'home_page.dart';
 part 'transaksi_page.dart';
 part 'setting_page.dart';
 part 'tracking_page.dart';
+part 'riwayat_page.dart';
 part 'faktur_page.dart';

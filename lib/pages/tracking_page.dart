@@ -22,10 +22,18 @@ class _TrackingState extends State<Tracking>
                   controller: _tabController,
                   indicatorColor: primaryColor,
                   tabs: [
-                    Tab(text: "Konfirmasi"),
-                    Tab(text: "Proses"),
-                    Tab(text: "Selesai"),
-                    Tab(text: "Riwayat"),
+                    Tab(
+                      child: Text("Pending", style: TextStyle(fontSize: 13.5)),
+                    ),
+                    Tab(
+                      child: Text("Proses", style: TextStyle(fontSize: 13.5)),
+                    ),
+                    Tab(
+                      child: Text("Selesai", style: TextStyle(fontSize: 13.5)),
+                    ),
+                    Tab(
+                      child: Text("Riwayat", style: TextStyle(fontSize: 13.5)),
+                    ),
                   ],
                 )),
             body: TabBarView(controller: _tabController, children: [
@@ -476,7 +484,11 @@ class _TrackingState extends State<Tracking>
                                         borderRadius:
                                             new BorderRadius.circular(5.0))),
                                 onPressed: () {
-                                  //loginSumbimt();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => faktur(),
+                                      ));
                                 },
                               )),
                         ]))
@@ -551,7 +563,7 @@ class _TrackingState extends State<Tracking>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => faktur(),
+                                        builder: (context) => riwayat(),
                                       ));
                                 },
                               )),
