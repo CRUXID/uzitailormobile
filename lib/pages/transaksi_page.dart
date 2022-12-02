@@ -36,23 +36,21 @@ class _TransaksiState extends State<Transaksi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Transaksi'),
+        centerTitle: true,
+        backgroundColor: SecondaryColor,
+        automaticallyImplyLeading: false,
+      ),
       body: Form(
         key: _formkey,
         child: Container(
           padding: EdgeInsets.all(10.0),
           child: ListView(
             children: [
-              Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    'Transaksi',
-                    style: TextStyle(
-                        color: Color(0xFF2B2D42),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 30),
-                  )),
-              //container
+              SizedBox(
+                height: 25,
+              ),
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 12),
                 //text with icon
