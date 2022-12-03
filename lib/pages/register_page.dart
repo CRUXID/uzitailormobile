@@ -1,7 +1,41 @@
 part of 'pages.dart';
 
-class Register extends StatelessWidget {
-  const Register({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  TextEditingController nama = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController nohp = TextEditingController();
+  TextEditingController alamat = TextEditingController();
+  var formkey = new GlobalKey<FormState>();
+
+  Future Regis() async {
+    var url = "http://192.168.18.6/uzitailor/API/register.php";
+    var response = await http.post(Uri.parse(url), body: {
+      "username": username.text,
+      "password": password.text,
+      "nama_pembeli": nama.text,
+      "no_hp": nohp.text,
+      "alamat": alamat.text
+    });
+    var data = json.decode(response.body);
+    if (data == "Error") {
+      print("gagal");
+      Fluttertoast.showToast(msg: "Username Telah Terdaftar");
+    } else {
+      print("sukses");
+      Fluttertoast.showToast(msg: "Register Berhasil");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Login(),
+          ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,21 +69,35 @@ class Register extends StatelessWidget {
                 children: [
                   SizedBox(height: 2),
                   TextFormField(
+                    validator: (val) => val == "" ? "Masukkan Username" : null,
+                    controller: username,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.alternate_email_outlined),
-                        labelText: "Email"),
+                        prefixIcon: Icon(Icons.person), labelText: "Username"),
                   ),
                   TextFormField(
+                    validator: (val) => val == "" ? "Masukkan Nama" : null,
+                    controller: nama,
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.face_unlock_outlined),
-                        labelText: "Fullname"),
+                        labelText: "Nama"),
                   ),
                   TextFormField(
+                    validator: (val) => val == "" ? "Masukkan Alamat" : null,
+                    controller: alamat,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person_outline),
-                        labelText: "Username"),
+                        prefixIcon: Icon(Icons.home_outlined),
+                        labelText: "Alamat"),
                   ),
                   TextFormField(
+                    validator: (val) => val == "" ? "Masukkan No HP" : null,
+                    controller: nohp,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.phone_android_outlined),
+                        labelText: "No HP"),
+                  ),
+                  TextFormField(
+                    validator: (val) => val == "" ? "Masukkan Password" : null,
+                    controller: password,
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.lock_outline_rounded),
                         labelText: "Password"),
@@ -78,11 +126,12 @@ class Register extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100))),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Login(),
-                          ));
+                      Regis();
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => Login(),
+                      //     ));
                     },
                   ),
                 )),

@@ -7,6 +7,104 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   late bool _obscureText = true;
+  TextEditingController user = TextEditingController();
+  TextEditingController pass = TextEditingController();
+  var formkey = new GlobalKey<FormState>();
+
+  Future login2() async {
+    var url = "http://192.168.18.6/uzitailor/API/login1.php";
+    var response = await http.post(Uri.parse(url), body: {
+      "username": user.text,
+      "password": pass.text,
+    });
+    var data = json.decode(response.body);
+    if (data == "error") {
+      print("gagal");
+      Fluttertoast.showToast(msg: "gagal");
+    } else {
+      print("berhasil");
+      Fluttertoast.showToast(msg: "berhasil");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ));
+    }
+  }
+
+  // Future login() async {
+  //   final url = "http://192.168.18.6/uzitailor/API/cek_login.php";
+  //   var response = await http.post(Uri.parse(url),
+  //       body: {"username": user.text, "password": pass.text});
+
+  //   var data = jsonDecode(response.body);
+  //   if (data == "success") {
+  //     Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => Home(),
+  //         ));
+  //     Fluttertoast.showToast(msg: "Login Succesfully :)");
+  //   } else {
+  //     print("gagal");
+  //   }
+  // }
+
+  // loginusernow() async {
+  //   try {
+  //     var res = await http.post(
+  //       Uri.parse("http://192.168.18.6/uzitailor/API/cek_login.php"),
+  //       body: {
+  //         'username': user.text.trim(),
+  //         'password': pass.text.trim(),
+  //       },
+  //     );
+
+  //     if (res.statusCode == 200) //Connection with API to server is succes
+  //     {
+  //       var resbodyoflogin = jsonDecode(res.body);
+
+  //       if (resbodyoflogin['berhasil'] == true) {
+  //         Fluttertoast.showToast(msg: "Login Succesfully :)");
+
+  //         // User userinfo = User.fromJson(resbodyoflogin["userData"]);
+
+  //         //save userInfo to local storage pake Shared Preferences
+  //         // await RememberUserPrefs.storeUserInfo(userinfo);
+
+  //         // Fungsi pindah Activity dari Login ke Dashboard
+  //         Future.delayed(Duration(milliseconds: 2), () {
+  //           Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (context) => Home(),
+  //               ));
+  //           print("Berhasil");
+  //         });
+  //       } else {
+  //         Fluttertoast.showToast(msg: "Email Or Password Is Wrong");
+  //         print("jsdbskjdbka");
+  //       }
+  //     }
+  //   } catch (errorMsg) {
+  //     Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
+  //     print("Error :: " + errorMsg.toString());
+  //   }
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Start listening to changes.
+    user.addListener(_printValue);
+    pass.addListener(_printValue);
+  }
+
+  _printValue() {
+    print("Value: ${user.text}");
+    print("Value: ${pass.text}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +140,9 @@ class _LoginState extends State<Login> {
                   children: [
                     SizedBox(height: 04),
                     TextFormField(
+                      controller: user,
+                      validator: (val) =>
+                          val == "" ? "Masukkan Username" : null,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           labelText: "Username"),
@@ -51,6 +152,9 @@ class _LoginState extends State<Login> {
                       height: 15,
                     ),
                     TextFormField(
+                      validator: (val) =>
+                          val == "" ? "Masukkan Password" : null,
+                      controller: pass,
                       decoration: InputDecoration(
                           // suffixIcon: GestureDetector(
                           //   onTap: () {
@@ -62,6 +166,7 @@ class _LoginState extends State<Login> {
                           //       ? Icons.visibility
                           //       : Icons.visibility_off),
                           // ),
+
                           prefixIcon: Icon(Icons.lock),
                           labelText: "Password"),
                       obscureText: _obscureText,
@@ -105,11 +210,18 @@ class _LoginState extends State<Login> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100))),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Home(),
-                          ));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => Home(),
+                      //     ));
+
+                      if (formKey.currentState!.validate()) {
+                        _printValue();
+                        // loginusernow();
+                        login2();
+                        // login();
+                      } else {}
                     },
                   ),
                 )),
