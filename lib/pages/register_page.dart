@@ -13,27 +13,94 @@ class _RegisterState extends State<Register> {
   TextEditingController alamat = TextEditingController();
   var formkey = new GlobalKey<FormState>();
 
-  Future Regis() async {
-    var url = "http://192.168.18.6/uzitailor/API/register.php";
-    var response = await http.post(Uri.parse(url), body: {
-      "username": username.text,
-      "password": password.text,
-      "nama_pembeli": nama.text,
-      "no_hp": nohp.text,
-      "alamat": alamat.text
-    });
-    var data = json.decode(response.body);
-    if (data == "Error") {
-      print("gagal");
-      Fluttertoast.showToast(msg: "Username Telah Terdaftar");
-    } else {
-      print("sukses");
-      Fluttertoast.showToast(msg: "Register Berhasil");
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Login(),
-          ));
+  //bisa tp kurang bagus
+  // Future Regis() async {
+  //   var url = "http://192.168.18.6/uzitailor/API/register.php";
+  //   var response = await http.post(Uri.parse(url), body: {
+  //     "username": username.text,
+  //     "password": password.text,
+  //     "nama_pembeli": nama.text,
+  //     "no_hp": nohp.text,
+  //     "alamat": alamat.text
+  //   });
+  //   var data = json.decode(response.body);
+  //   if (data == "Error") {
+  //     print("gagal");
+  //     Fluttertoast.showToast(msg: "Username Telah Terdaftar");
+  //   } else {
+  //     print("sukses");
+  //     Fluttertoast.showToast(msg: "Register Berhasil");
+  //     Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => Login(),
+  //         ));
+  //   }
+  // }
+
+  //nyoba yg lebih rapih
+  validateUserEmail() async {
+    try {
+      var res = await http.post(
+        Uri.parse(API.validate),
+        body: {
+          'username': username.text.trim(),
+        },
+      );
+
+      if (res.statusCode == 200) //Connection with API to server is succes
+      {
+        var result = jsonDecode(res.body);
+        // var resbodyofvalidateEmail = await json.decode(json.encode(res.body));
+
+        if (result['user'] == true) {
+          Fluttertoast.showToast(msg: "Username Telah Terdaftar");
+        } else {
+          // Register & save new user record to database
+          RegisterAndsaveUserRecord();
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
+
+  RegisterAndsaveUserRecord() async {
+    User userModel = User(1, nama.text.trim(), alamat.text.trim(),
+        nohp.text.trim(), username.text.trim(), password.text.trim());
+
+    try {
+      var res = await http.post(
+        Uri.parse(API.Register),
+        body: userModel.toJson(),
+      );
+      if (res.statusCode == 200) {
+        // var resbodyofSignUp = await jsonDecode(jsonEncode(res.body));
+        var resbodyofSignUp = jsonDecode(res.body);
+        if (resbodyofSignUp['Berhasil'] == true) {
+          Fluttertoast.showToast(msg: "Register Berhasil");
+
+          setState(() {
+            nama.clear();
+            username.clear();
+            password.clear();
+            alamat.clear();
+            nohp.clear();
+          });
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Login(),
+              ));
+        } else {
+          Fluttertoast.showToast(msg: "Register Gagal");
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+      print("sndsdkkdand");
+      Fluttertoast.showToast(msg: e.toString());
     }
   }
 
@@ -72,7 +139,8 @@ class _RegisterState extends State<Register> {
                     validator: (val) => val == "" ? "Masukkan Username" : null,
                     controller: username,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person), labelText: "Username"),
+                        prefixIcon: Icon(Icons.person_outlined),
+                        labelText: "Username"),
                   ),
                   TextFormField(
                     validator: (val) => val == "" ? "Masukkan Nama" : null,
@@ -126,7 +194,10 @@ class _RegisterState extends State<Register> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100))),
                     onPressed: () {
-                      Regis();
+                      if (formKey.currentState!.validate()) {
+                        validateUserEmail();
+                      }
+
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(

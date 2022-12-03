@@ -5,6 +5,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  late TabController _tabController; // ADD THIS
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

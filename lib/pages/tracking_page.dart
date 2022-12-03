@@ -8,6 +8,10 @@ class _TrackingState extends State<Tracking>
     with SingleTickerProviderStateMixin {
   late int currentTab;
   late TabController _tabController = new TabController(length: 4, vsync: this);
+  // void initState() {
+  //   super.initState();
+  //   _tabController = new TabController(vsync: this, length: 4);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +144,8 @@ class _TrackingState extends State<Tracking>
                                         borderRadius:
                                             new BorderRadius.circular(5.0))),
                                 onPressed: () {
-                                  //loginSumbimt();
+                                  _tabController.animateTo(
+                                      (_tabController.index + 1) % 2);
                                 },
                               )),
                         ])),

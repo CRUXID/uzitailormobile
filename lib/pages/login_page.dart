@@ -11,26 +11,40 @@ class _LoginState extends State<Login> {
   TextEditingController pass = TextEditingController();
   var formkey = new GlobalKey<FormState>();
 
-  Future login2() async {
-    var url = "http://192.168.18.6/uzitailor/API/login1.php";
-    var response = await http.post(Uri.parse(url), body: {
-      "username": user.text,
-      "password": pass.text,
-    });
-    var data = json.decode(response.body);
-    if (data == "error") {
-      print("gagal");
-      Fluttertoast.showToast(msg: "gagal");
-    } else {
-      print("berhasil");
-      Fluttertoast.showToast(msg: "berhasil");
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home(),
-          ));
-    }
-  }
+  // Future login2() async {
+  //   var url = "http://192.168.18.6/uzitailor/API/login1.php";
+  //   var response = await http.post(Uri.parse(url), body: {
+  //     "username": user.text,
+  //     "password": pass.text,
+  //   });
+  //   var data = json.decode(response.body);
+  //   if (data == "error") {
+  //     print("gagal");
+  //     Fluttertoast.showToast(
+  //         msg: "Username atau Password Salah",
+  //         toastLength: Toast.LENGTH_SHORT,
+  //         gravity: ToastGravity.CENTER,
+  //         timeInSecForIosWeb: 1,
+  //         backgroundColor: Colors.red,
+  //         textColor: Colors.white,
+  //         fontSize: 16.0);
+  //   } else {
+  //     print("berhasil");
+  //     Fluttertoast.showToast(
+  //         msg: "Sealamat Datang",
+  //         toastLength: Toast.LENGTH_SHORT,
+  //         gravity: ToastGravity.CENTER,
+  //         timeInSecForIosWeb: 1,
+  //         backgroundColor: Colors.red,
+  //         textColor: Colors.white,
+  //         fontSize: 16.0);
+  //     Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => Home(),
+  //         ));
+  //   }
+  // }
 
   // Future login() async {
   //   final url = "http://192.168.18.6/uzitailor/API/cek_login.php";
@@ -50,47 +64,48 @@ class _LoginState extends State<Login> {
   //   }
   // }
 
-  // loginusernow() async {
-  //   try {
-  //     var res = await http.post(
-  //       Uri.parse("http://192.168.18.6/uzitailor/API/cek_login.php"),
-  //       body: {
-  //         'username': user.text.trim(),
-  //         'password': pass.text.trim(),
-  //       },
-  //     );
+  loginusernow() async {
+    try {
+      var res = await http.post(
+        Uri.parse(API.Login),
+        body: {
+          'username': user.text.trim(),
+          'password': pass.text.trim(),
+        },
+      );
 
-  //     if (res.statusCode == 200) //Connection with API to server is succes
-  //     {
-  //       var resbodyoflogin = jsonDecode(res.body);
+      if (res.statusCode == 200) //Connection with API to server is succes
+      {
+        var resbodyoflogin = jsonDecode(res.body);
 
-  //       if (resbodyoflogin['berhasil'] == true) {
-  //         Fluttertoast.showToast(msg: "Login Succesfully :)");
+        if (resbodyoflogin['Berhasil'] == true) {
+          Fluttertoast.showToast(msg: "Login Succesfully :)");
 
-  //         // User userinfo = User.fromJson(resbodyoflogin["userData"]);
+          // User userinfo = User.fromJson(resbodyoflogin["userData"]);
 
-  //         //save userInfo to local storage pake Shared Preferences
-  //         // await RememberUserPrefs.storeUserInfo(userinfo);
+          //save userInfo to local storage pake Shared Preferences
+          // await RememberUserPrefs.storeUserInfo(userinfo);
 
-  //         // Fungsi pindah Activity dari Login ke Dashboard
-  //         Future.delayed(Duration(milliseconds: 2), () {
-  //           Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => Home(),
-  //               ));
-  //           print("Berhasil");
-  //         });
-  //       } else {
-  //         Fluttertoast.showToast(msg: "Email Or Password Is Wrong");
-  //         print("jsdbskjdbka");
-  //       }
-  //     }
-  //   } catch (errorMsg) {
-  //     Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
-  //     print("Error :: " + errorMsg.toString());
-  //   }
-  // }
+          // Fungsi pindah Activity dari Login ke Dashboard
+          Future.delayed(Duration(milliseconds: 2000), () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Home(),
+                ));
+            print("Berhasil");
+          });
+        } else {
+          Fluttertoast.showToast(msg: "Email Or Password Is Wrong");
+          print("jsdbskjdbka");
+        }
+      }
+    } catch (errorMsg) {
+      Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
+      print("Error :: " + errorMsg.toString());
+      print("hdbdkwbjhfw");
+    }
+  }
 
   @override
   void initState() {
@@ -218,10 +233,10 @@ class _LoginState extends State<Login> {
 
                       if (formKey.currentState!.validate()) {
                         _printValue();
-                        // loginusernow();
-                        login2();
+                        loginusernow();
+                        // login2();
                         // login();
-                      } else {}
+                      }
                     },
                   ),
                 )),
