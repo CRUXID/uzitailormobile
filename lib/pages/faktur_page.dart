@@ -30,43 +30,33 @@ class _fakturState extends State<faktur> {
           SizedBox(
             height: 13,
           ),
-          Text.rich(
-            TextSpan(
-                text: "Total Pembayaran DP",
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Total Pembayaran DP',
                 style: TextStyle(
                     color: SixthColor,
                     fontWeight: FontWeight.w400,
-                    fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "            Waktu Pembayaran DP",
-                    style: TextStyle(
-                        color: Color(0xFF414460),
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14),
-                  ),
-                ]),
-          ),
+                    fontSize: 14)),
+            Text('Waktu Pembayaran DP',
+                style: TextStyle(
+                    color: SixthColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14)),
+          ]),
           SizedBox(
             height: 8,
           ),
-          Text.rich(
-            TextSpan(
-                text: "Rp. 220.000",
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Rp. 220.000',
                 style: TextStyle(
                     color: SixthColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "                             20/10/2022",
-                    style: TextStyle(
-                        color: Color(0xFF414460),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
-                  ),
-                ]),
-          ),
+                    fontSize: 14)),
+            Text('2022/10/20',
+                style: TextStyle(
+                    color: SixthColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14)),
+          ]),
           SizedBox(
             height: 13,
           ),
@@ -132,145 +122,83 @@ class _fakturState extends State<faktur> {
           SizedBox(
             height: 8,
           ),
-          Text.rich(
-            TextSpan(
-                text: "Kaos Lengan Pendek",
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Kaos Lengan Pendek',
                 style: TextStyle(
                     color: SixthColor,
                     fontWeight: FontWeight.w400,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                                                 x24",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text.rich(
-            TextSpan(
-                text: "Ukuran : M",
+                    fontSize: 12)),
+            Text('x24',
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                                                       Rp. 10.000",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
+                    fontSize: 12)),
+          ]),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
-          Text.rich(
-            TextSpan(
-                text: "Jenis    : Katun",
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Note : warna pink magenta',
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                                            Rp. 240.000",
-                    style: TextStyle(
-                        color: SixthColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
+                    fontSize: 12)),
+            Text('Rp.10.000',
+                style: TextStyle(
+                    color: FifthColor,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12)),
+          ]),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
-          Text(
-            "Note     : Warna Pink Magenta",
-            style: TextStyle(
-                color: FifthColor, fontWeight: FontWeight.w300, fontSize: 12),
-          ),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            Text('Rp. 240.000',
+                style: TextStyle(
+                    color: SixthColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12))
+          ]),
           SizedBox(
             height: 20,
           ),
-          Text.rich(
-            TextSpan(
-                text: "Kaos Lengan Panjang",
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Kaos Lengan Panjang',
                 style: TextStyle(
                     color: SixthColor,
                     fontWeight: FontWeight.w400,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                                                x20",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text.rich(
-            TextSpan(
-                text: "Ukuran : S",
+                    fontSize: 12)),
+            Text('x20',
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                                                        Rp. 10.000",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
+                    fontSize: 12)),
+          ]),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
-          Text.rich(
-            TextSpan(
-                text: "Jenis    : Katun",
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Note : warna pink magenta',
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                                             Rp. 200.000",
-                    style: TextStyle(
-                        color: SixthColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
+                    fontSize: 12)),
+            Text('Rp.10.000',
+                style: TextStyle(
+                    color: FifthColor,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12)),
+          ]),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
-          Text(
-            "Note     : - ",
-            style: TextStyle(
-                color: FifthColor, fontWeight: FontWeight.w300, fontSize: 12),
-          ),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            Text('Rp. 200.000',
+                style: TextStyle(
+                    color: SixthColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12))
+          ]),
           SizedBox(
             height: 13,
           ),
@@ -281,163 +209,60 @@ class _fakturState extends State<faktur> {
           SizedBox(
             height: 5,
           ),
-          Text.rich(
-            TextSpan(
-                text: "Subtotal Barang",
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Subtotal Barang',
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
-                    fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                            Rp. 440.000",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 14),
-                  ),
-                ]),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text.rich(
-            TextSpan(
-                text: "Total Pembayaran DP",
+                    fontSize: 14)),
+            Text('Rp.440.000',
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
-                    fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "                               - Rp. 220.000",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 14),
-                  ),
-                ]),
-          ),
+                    fontSize: 14)),
+          ]),
           SizedBox(
             height: 5,
           ),
-          Text.rich(
-            TextSpan(
-                text: "Total Pembayaran",
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Total Pembayaran DP',
+                style: TextStyle(
+                    color: FifthColor,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14)),
+            Text('-Rp.220.000',
+                style: TextStyle(
+                    color: FifthColor,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14)),
+          ]),
+          SizedBox(
+            height: 5,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('Total Pembayaran',
                 style: TextStyle(
                     color: SixthColor,
                     fontWeight: FontWeight.w400,
-                    fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "                                      Rp. 200.000",
-                    style: TextStyle(
-                        color: SixthColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14),
-                  ),
-                ]),
+                    fontSize: 14)),
+            Text('Rp.220.000',
+                style: TextStyle(
+                    color: SixthColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14)),
+          ]),
+          SizedBox(
+            height: 20,
           ),
           ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
               child: BarcodeWidget(
                 barcode: Barcode.code128(),
                 data: 'asadaada',
                 drawText: false,
                 width: double.infinity,
-                height: 70,
+                height: 60,
               )),
-          SizedBox(
-            height: 5,
-          ),
-          Divider(
-            color: FifthColor,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text.rich(
-            TextSpan(
-                text: "Waktu Pemesanan",
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                                      20/10/2022",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text.rich(
-            TextSpan(
-                text: "Waktu Pembayaran DP",
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                               20/10/2022",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text.rich(
-            TextSpan(
-                text: "Waktu Barang Selesai",
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        "                                                 27/10/2022",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text.rich(
-            TextSpan(
-                text: "Waktu Pembayaran Selesai",
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "                                       27/10/2022",
-                    style: TextStyle(
-                        color: FifthColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12),
-                  ),
-                ]),
-          ),
         ],
       ),
     );
