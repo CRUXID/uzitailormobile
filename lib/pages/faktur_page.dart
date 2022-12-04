@@ -339,7 +339,15 @@ class _fakturState extends State<faktur> {
                   ),
                 ]),
           ),
-          Image.asset('assets/images/barcode.jpg', height: 226.01, width: 250),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: BarcodeWidget(
+                barcode: Barcode.code128(),
+                data: 'asadaada',
+                drawText: false,
+                width: double.infinity,
+                height: 70,
+              )),
           SizedBox(
             height: 5,
           ),

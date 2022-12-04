@@ -33,7 +33,7 @@ dependencies:
   google_fonts: ^3.0.1
   flutter_otp_text_field: ^1.1.0+2
   shared_preferences: ^2.0.15
-  barcode: ^2.2.3
+  barcode_widget: ^2.0.2
   http: ^0.13.3
   fluttertoast: ^8.1.1
 

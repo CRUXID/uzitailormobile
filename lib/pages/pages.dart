@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:uzitailor/shared/shared.dart';
 import '../api/api.connection.dart';
 import '../main.dart';
 import '../model/user.dart';
+import '../pref/user_pref.dart';
 
 part 'welcome_pages.dart';
 part 'login_page.dart';

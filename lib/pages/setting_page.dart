@@ -5,6 +5,12 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  TextEditingController user = TextEditingController();
+  TextEditingController nama = TextEditingController();
+  TextEditingController alamat = TextEditingController();
+  TextEditingController nohp = TextEditingController();
+  TextEditingController password = TextEditingController();
+
   bool isObscurePassword = true;
   @override
   Widget build(BuildContext context) {
@@ -12,7 +18,15 @@ class _SettingState extends State<Setting> {
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await RememberUserPrefs.removeUserInfo();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ));
+                  Fluttertoast.showToast(msg: "Logout ");
+                },
                 icon: new Icon(
                   Icons.logout_outlined,
                   color: primaryColor,
@@ -62,7 +76,11 @@ class _SettingState extends State<Setting> {
                   SizedBox(
                     height: 30,
                   ),
-                  buildTextField("Username", "thorsonofodin", false),
+                  buildTextField(
+                    "Username",
+                    "thorsonofodin",
+                    false,
+                  ),
                   buildTextField("Full Name", "Thoriq Lukman Hakim", false),
                   buildTextField("Address", "thoriq00@gmail.com", false),
                   buildTextField("No HP", "080808080808", false),

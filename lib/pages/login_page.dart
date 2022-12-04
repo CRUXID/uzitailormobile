@@ -76,18 +76,18 @@ class _LoginState extends State<Login> {
 
       if (res.statusCode == 200) //Connection with API to server is succes
       {
-        var resbodyoflogin = jsonDecode(res.body);
+        var result = jsonDecode(res.body);
 
-        if (resbodyoflogin['Berhasil'] == true) {
+        if (result['Berhasil'] == true) {
           Fluttertoast.showToast(msg: "Login Succesfully :)");
 
-          // User userinfo = User.fromJson(resbodyoflogin["userData"]);
+          User userinfo = User.fromJson(result["userData"]);
 
-          //save userInfo to local storage pake Shared Preferences
-          // await RememberUserPrefs.storeUserInfo(userinfo);
+          // save userInfo to local storage pake Shared Preferences
+          await RememberUserPrefs.storeUserInfo(userinfo);
 
           // Fungsi pindah Activity dari Login ke Dashboard
-          Future.delayed(Duration(milliseconds: 2000), () {
+          Future.delayed(Duration(milliseconds: 2), () {
             Navigator.push(
                 context,
                 MaterialPageRoute(

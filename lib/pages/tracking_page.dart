@@ -44,8 +44,8 @@ class _TrackingState extends State<Tracking>
               ListView(padding: const EdgeInsets.all(10), children: <Widget>[
                 Container(
                     height: 240,
+                    width: MediaQuery.of(context).size.width,
                     color: Color(0xFFEDF2F4),
-
                     //child: const Center
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +55,7 @@ class _TrackingState extends State<Tracking>
                           ),
                           Text.rich(
                             TextSpan(
-                                text: "   Kamis, 22 Oktober 2022",
+                                text: "  Kamis, 22 Oktober 2022",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
