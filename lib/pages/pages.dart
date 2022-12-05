@@ -14,12 +14,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uzitailor/pages/tracking_home.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 import 'package:uzitailor/shared/shared.dart';
 
 import '../api/api.connection.dart';
 import '../main.dart';
 import '../model/user.dart';
+import 'package:uzitailor/pref/current_user.dart';
 import '../pref/user_pref.dart';
 
 part 'welcome_pages.dart';

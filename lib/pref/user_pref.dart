@@ -22,6 +22,11 @@ class RememberUserPrefs {
     return currentUserInfo;
   }
 
+  static Future getUserData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getInt("valueSharedPreferences");
+  }
+
   static Future<void> removeUserInfo() async {
     User? currentUserInfo;
     SharedPreferences preferences = await SharedPreferences.getInstance();

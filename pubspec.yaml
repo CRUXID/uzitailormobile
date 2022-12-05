@@ -36,6 +36,7 @@ dependencies:
   barcode_widget: ^2.0.2
   http: ^0.13.3
   fluttertoast: ^8.1.1
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0

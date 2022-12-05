@@ -16,8 +16,6 @@ class _TransaksiState extends State<Transaksi> {
     'Celana Panjang',
     'Seragam Pemuda Pancasila',
   ];
-  //list ukuran baju
-  List<String> ukuran = ['S', 'M', 'L', 'XL', 'XXL'];
   //list jenis kain
   List<String> kain = ['Katun', 'Sutra', 'Kanvas', 'Denim', 'Kain Sutra'];
   //list string
@@ -51,53 +49,7 @@ class _TransaksiState extends State<Transaksi> {
               SizedBox(
                 height: 25,
               ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 12),
-                //text with icon
-                child: Row(
-                  //container
-                  children: [
-                    const Icon(Icons.location_on),
-                    const Text(
-                      '  Alamat Pembeli',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              //container
-              Container(
-                padding: const EdgeInsets.fromLTRB(12, 1, 0, 5),
-                //text with icon
-                child: Row(
-                  //container
-                  children: [
-                    const Text('Thoriq Lukman Hakim | 085156259183'),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(12, 1, 0, 5),
-                //text with icon
-                child: Row(
-                  //container
-                  children: [
-                    const Text('Perumahan Mastrip EE 7'),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(12, 1, 0, 25),
-                //text with icon
-                child: Row(
-                  //container
-                  children: [
-                    const Text('SUMBERSARI , KAB. JEMBER, JAWA TIMUR 68121'),
-                  ],
-                ),
-              ),
+
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 12),
                 //text with icon
@@ -137,32 +89,6 @@ class _TransaksiState extends State<Transaksi> {
                   onChanged: (String? value) {
                     setState(() {
                       _namabarang = value;
-                    });
-                  },
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: DropdownButtonFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    labelText: 'Ukuran',
-                    hintText: 'Pilih Ukuran',
-                    //icon ukuran
-                    prefixIcon: Icon(Icons.format_size),
-                  ),
-                  value: _ukuran,
-                  items: ukuran.map((String value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _ukuran = value;
                     });
                   },
                 ),
