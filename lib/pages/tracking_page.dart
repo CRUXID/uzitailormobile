@@ -177,8 +177,9 @@ class _TrackingState extends State<Tracking>
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                _tabController
-                                    .animateTo((_tabController.index + 1) % 2);
+                                _openWA();
+                                //_tabController
+                                //.animateTo((_tabController.index + 1) % 2);
                               },
                               child: Text(
                                 "Hubungi Penjual",
@@ -662,5 +663,11 @@ class _TrackingState extends State<Tracking>
                 ),
               ]),
             ])));
+  }
+
+  void _openWA() async {
+    String phoneNumber = '+6282228654386';
+    var url = 'https://wa.me/6282228654386';
+    await launch(url);
   }
 }

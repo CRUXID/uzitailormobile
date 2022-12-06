@@ -12,9 +12,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:uzitailor/pages/tracking_home.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:uzitailor/shared/shared.dart';
 
