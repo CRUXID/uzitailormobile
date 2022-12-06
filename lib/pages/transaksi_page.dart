@@ -9,21 +9,33 @@ class Transaksi extends StatefulWidget {
 
 class _TransaksiState extends State<Transaksi> {
   final _formkey = GlobalKey<FormState>();
-  List<String> namabarang = [
-    'Kemeja',
-    'Kaos',
-    'Jas',
-    'Celana Panjang',
-    'Seragam Pemuda Pancasila',
-  ];
-  //list jenis kain
-  List<String> kain = ['Katun', 'Sutra', 'Kanvas', 'Denim', 'Kain Sutra'];
-  //list string
-  List<String> pembeli = ['Fikri', 'Thoriq', 'Firdi', 'Gabriel', 'Regina'];
-  //inisiasi variable pembeli
+
+  String? _namabarang;
+  String? selected2;
+  List data = [];
+
+  Future _getData() async {
+    var response = await http.get(Uri.parse(API.namabarang),
+        headers: {"Accept": "application/json"});
+    var jsonBody = response.body;
+    final List<dynamic> jsonData = jsonDecode(jsonBody);
+
+    setState(() {
+      data = jsonData as List;
+    });
+    print(jsonData);
+  }
+
+  void initState() {
+    // ignore: todo
+    // TODO: implement initState
+    super.initState();
+    _getData();
+    ;
+  }
+
   String? _pembeli;
   //inisiasi variable nama barang
-  String? _namabarang;
   //inisiasi variable ukuran
   String? _ukuran;
   //inisiasi variable kain
@@ -49,7 +61,6 @@ class _TransaksiState extends State<Transaksi> {
               SizedBox(
                 height: 25,
               ),
-
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 12),
                 //text with icon
@@ -80,15 +91,16 @@ class _TransaksiState extends State<Transaksi> {
                     prefixIcon: Icon(Icons.shopping_bag),
                   ),
                   value: _namabarang,
-                  items: namabarang.map((String value) {
+                  items: data.map((List) {
                     return DropdownMenuItem(
-                      value: value,
-                      child: Text(value),
+                      child: Text(List['nama_barang']),
+                      value: List['nama_barang'],
                     );
                   }).toList(),
-                  onChanged: (String? value) {
+                  onChanged: (value) {
                     setState(() {
-                      _namabarang = value;
+                      _namabarang = value as String?;
+                      print(value);
                     });
                   },
                 ),
@@ -105,16 +117,17 @@ class _TransaksiState extends State<Transaksi> {
                     //icon jenis kain
                     prefixIcon: Icon(Icons.format_paint),
                   ),
-                  value: _kain,
-                  items: kain.map((String value) {
+                  value: selected2,
+                  items: data.map((List) {
                     return DropdownMenuItem(
-                      value: value,
-                      child: Text(value),
+                      child: Text(List['harga']),
+                      value: List['harga'],
                     );
                   }).toList(),
-                  onChanged: (String? value) {
+                  onChanged: (value1) {
                     setState(() {
-                      _kain = value;
+                      selected2 = value1 as String?;
+                      print(value1);
                     });
                   },
                 ),
@@ -173,7 +186,7 @@ class _TransaksiState extends State<Transaksi> {
   //void pilih ukuran
   void pilihUkuran(String? value) {
     setState(() {
-      _ukuran = value;
+      selected2 = value;
     });
   }
 
@@ -193,8 +206,7 @@ class _TransaksiState extends State<Transaksi> {
         child: Column(
           children: [
             Text("Nama Barang: $_namabarang"),
-            Text("Ukuran : $_ukuran"),
-            Text("Jenis Kain : $_kain"),
+            Text("Jenis Kain : $selected2"),
             Text("Qty : ${qty.text}"),
             //padding
             const Padding(padding: EdgeInsets.all(10)),

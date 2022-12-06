@@ -8,10 +8,27 @@ class _TrackingState extends State<Tracking>
     with SingleTickerProviderStateMixin {
   late int currentTab;
   late TabController _tabController = new TabController(length: 4, vsync: this);
-  // void initState() {
-  //   super.initState();
-  //   _tabController = new TabController(vsync: this, length: 4);
-  // }
+  final String url = API.selecttrx;
+  List data =
+      []; //DEFINE VARIABLE data DENGAN TYPE List AGAR DAPAT MENAMPUNG COLLECTION / ARRAY
+
+  Future getData() async {
+    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON
+    var response = await http.get(Uri.parse(API.selecttrx));
+    if (response.statusCode == 200) {
+      setState(() {
+        data = json.decode(response.body);
+      });
+      print(data);
+      return data;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData(); //PANGGIL FUNGSI YANG TELAH DIBUAT SEBELUMNYA
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,167 +58,141 @@ class _TrackingState extends State<Tracking>
                   ],
                 )),
             body: TabBarView(controller: _tabController, children: [
-              ListView(padding: const EdgeInsets.all(10), children: <Widget>[
-                Card(
-                  shadowColor: Colors.black,
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 8,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [primaryColor, primaryColor],
-                      ),
-                    ),
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Kamis, 22 Oktober 2022",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14),
+              ListView.builder(
+                  padding: const EdgeInsets.all(10),
+                  itemCount: data == null ? 0 : data.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      child: Card(
+                        shadowColor: Colors.black,
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 8,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [primaryColor, primaryColor],
                             ),
-                            Text(
-                              "Menunggu Konfirmasi",
-                              style: TextStyle(
-                                  color: Color(0xFF414460),
-                                  fontWeight: FontWeight.w200,
-                                  fontSize: 12),
-                            )
-                          ],
-                        ),
-                        Divider(
-                          color: Color(0xFF8D99AE),
-                          thickness: 1,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Kaos Lengan Panjang S",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 12),
-                            ),
-                            Text(
-                              "x24",
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 12),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Rp.240.000",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    data[index]['waktu'],
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Text(
+                                    "Menunggu Konfirmasi",
+                                    style: TextStyle(
+                                        color: Color(0xFF414460),
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 12),
+                                  )
+                                ],
                               ),
-                            ]),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Kaos Lengan Panjang M",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 12),
-                            ),
-                            Text(
-                              "x20",
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 12),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Rp. 200.000",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12),
+                              Divider(
+                                color: Color(0xFF8D99AE),
+                                thickness: 1,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    data[index]['nama_barang'],
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 12),
+                                  ),
+                                  Text(
+                                    data[index]['qty'],
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 12),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      data[index]['sub_total'],
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12),
+                                    ),
+                                  ]),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Divider(
+                                color: Color(0xFF8D99AE),
+                                thickness: 1,
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      data[index]['total'],
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14),
+                                    ),
+                                  ]),
+                              Divider(
+                                color: Color(0xFF8D99AE),
+                                thickness: 1,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      _openWA();
+                                      //_tabController
+                                      //.animateTo((_tabController.index + 1) % 2);
+                                    },
+                                    child: Text(
+                                      "Hubungi Penjual",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.white,
+                                          letterSpacing: 2),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                        primary: ThirdColor,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 25, vertical: 10),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5))),
+                                  ),
+                                ],
                               )
-                            ]),
-                        Divider(
-                          color: Color(0xFF8D99AE),
-                          thickness: 1,
+                            ],
+                          ),
                         ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Total Pesanan : Rp.440.000",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14),
-                              ),
-                            ]),
-                        Divider(
-                          color: Color(0xFF8D99AE),
-                          thickness: 1,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                _openWA();
-                                //_tabController
-                                //.animateTo((_tabController.index + 1) % 2);
-                              },
-                              child: Text(
-                                "Hubungi Penjual",
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                    letterSpacing: 2),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                  primary: ThirdColor,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 25, vertical: 10),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5))),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ]),
+                      ),
+                    );
+                  }),
               //Center(
               //child: Text('konfirmasi'),
               //),

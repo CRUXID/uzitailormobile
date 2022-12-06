@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
   //   }
   // }
 
-  loginusernow() async {
+  Login() async {
     try {
       var res = await http.post(
         Uri.parse(API.Login),
@@ -233,7 +233,7 @@ class _LoginState extends State<Login> {
 
                       if (formKey.currentState!.validate()) {
                         _printValue();
-                        loginusernow();
+                        Login();
                         // login2();
                         // login();
                       }

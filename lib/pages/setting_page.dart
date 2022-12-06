@@ -10,7 +10,45 @@ class _SettingState extends State<Setting> {
   TextEditingController alamat = TextEditingController();
   TextEditingController nohp = TextEditingController();
   TextEditingController password = TextEditingController();
-  final CurrentUser _currentUser = Get.put(CurrentUser());
+
+  EditData() async {
+    try {
+      var res = await http.post(
+        Uri.parse(API.edit),
+        body: {
+          'username': user.text.trim(),
+          'nama_pembeli': nama.text.trim(),
+          'alamat': alamat.text.trim(),
+          'no_hp': nohp.text.trim(),
+          'password': password.text.trim(),
+        },
+      );
+      if (res.statusCode == 200) //Connection with API to server is succes
+      {
+        var result = jsonDecode(res.body);
+
+        if (result['berhasil'] == true) {
+          Fluttertoast.showToast(msg: "Data Berhasil Di Edit");
+          // Fungsi pindah Activity dari Login ke Dashboard
+          Future.delayed(Duration(milliseconds: 2), () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Setting(),
+                ));
+            print("berhasil");
+          });
+        } else {
+          Fluttertoast.showToast(msg: "Data Gagal Di Edit");
+          print("jsdbskjdbka");
+        }
+      }
+    } catch (errorMsg) {
+      Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
+      print("Error :: " + errorMsg.toString());
+      print("hdbdkwbjhfw");
+    }
+  }
 
   _retrieveValues() async {
     User? currentUserInfo;
@@ -33,29 +71,6 @@ class _SettingState extends State<Setting> {
   void initState() {
     super.initState();
     _retrieveValues();
-  }
-
-  Widget userInfoItemProfile(IconData iconData, String user) {
-    return Container(
-      child: Row(
-        children: [
-          Icon(
-            iconData,
-            size: 30,
-          ),
-          const SizedBox(
-            width: 16,
-          ),
-          Text(
-            user,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   bool isObscurePassword = true;
@@ -254,43 +269,22 @@ class _SettingState extends State<Setting> {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      OutlinedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Cancel",
-                          style: TextStyle(
-                              fontSize: 13,
-                              letterSpacing: 2,
-                              color: primaryColor),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            primary: ForthColor,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 15),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5))),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Save",
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.white,
-                              letterSpacing: 2),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            primary: SecondaryColor,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 15),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5))),
-                      )
-                    ],
-                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      EditData();
+                    },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                          fontSize: 13, color: Colors.white, letterSpacing: 2),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        primary: SecondaryColor,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5))),
+                  )
                 ],
               ),
             ),
