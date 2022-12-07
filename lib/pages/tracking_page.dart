@@ -637,8 +637,8 @@ class _TrackingState extends State<Tracking>
   }
 
   void _openWA() async {
-    String phoneNumber = '+6282228654386';
-    var url = 'https://wa.me/6282228654386';
+    String phoneNumber = '+6282337842227';
+    var url = 'https://wa.me/6282337842227';
     await launch(url);
   }
 }
