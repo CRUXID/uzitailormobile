@@ -7,6 +7,24 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   late TabController _tabController; // ADD THIS
 
+  final _pageController = PageController(viewportFraction: 0.877);
+
+  double currentPage = 0;
+
+  //indicator handler
+  @override
+  void initState() {
+    //pagecontroller dibuat selalu listening
+    //setiap pageview discrollke samping maka akan mengambil index page
+    _pageController.addListener(() {
+      setState(() {
+        currentPage = _pageController.page!.toDouble();
+        print(currentPage);
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +112,7 @@ class _DashboardState extends State<Dashboard> {
           Padding(
             padding: EdgeInsets.fromLTRB(15, 280, 0, 0),
             child: Text(
-              'Status Pesanan',
+              'Katalog Barang',
               style: TextStyle(
                   color: Color(0xFF8D99AE),
                   fontSize: 16,
@@ -107,132 +125,77 @@ class _DashboardState extends State<Dashboard> {
                 color: Color(0xFF8D99AE),
                 thickness: 1,
               )),
-          Padding(
-              padding: EdgeInsets.fromLTRB(15, 330, 0, 0),
-              child: Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color(0xFF8D99AE),
-                          spreadRadius: 0.1,
-                          blurRadius: 3,
-                          offset: Offset(0.0, 4.0))
-                    ]),
-                child: TextButton(
-                  child: Icon(
-                    Icons.add_to_home_screen_outlined,
-                    color: SecondaryColor,
-                    size: 40,
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => track()));
-                  },
+          ListView(
+            children: [
+              SizedBox(
+                height: 315,
+              ),
+              Container(
+                height: 400,
+                child: PageView(
+                  //boucingscrollphysics() membuat efek mantul saat discroll ke samping
+                  physics: BouncingScrollPhysics(),
+                  controller: _pageController,
+
+                  //membuat pageview dapat discroll ke samping
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        'Kemeja Lengan Panjang',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: SecondaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      margin: EdgeInsets.only(right: 15),
+                      width: 200,
+                      height: 350,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            "https://images.unsplash.com/photo-1607355739828-0bf365440db5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1444&q=80",
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 15),
+                      width: 350,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 15),
+                      width: 350,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              )),
-          Padding(
-              padding: EdgeInsets.fromLTRB(140, 330, 0, 0),
-              child: Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color(0xFF8D99AE),
-                          spreadRadius: 0.1,
-                          blurRadius: 3,
-                          offset: Offset(0.0, 4.0))
-                    ]),
-                child: TextButton(
-                  child: Icon(
-                    Icons.av_timer_outlined,
-                    color: SecondaryColor,
-                    size: 40,
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Tracking()));
-                  },
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.fromLTRB(270, 330, 15, 0),
-              child: Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color(0xFF8D99AE),
-                          spreadRadius: 0.1,
-                          blurRadius: 3,
-                          offset: Offset(0.0, 4.0))
-                    ]),
-                child: TextButton(
-                  child: Icon(
-                    Icons.checklist,
-                    color: SecondaryColor,
-                    size: 40,
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Home()));
-                  },
-                ),
-              )),
-          Padding(
-            padding: EdgeInsets.fromLTRB(20, 440, 15, 0),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                  text: 'Tunggu Konfirmasi',
-                  style: FontButton.copyWith(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF8D99AE)),
-                ),
-              ]),
-              //textAlign: TextAlign.right,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(174, 440, 15, 0),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                  text: 'Proses',
-                  style: FontButton.copyWith(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF8D99AE)),
-                ),
-              ]),
-              //textAlign: TextAlign.right,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(304, 440, 15, 0),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                  text: 'Selesai',
-                  style: FontButton.copyWith(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF8D99AE)),
-                ),
-              ]),
-              //textAlign: TextAlign.right,
-            ),
-          ),
+              ),
+            ],
+          )
         ]));
   }
 }
