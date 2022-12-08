@@ -11,15 +11,37 @@ class _TrackingState extends State<Tracking>
   List data = [];
   List data2 = [];
   List data3 = [];
-  List data4 =
-      []; //DEFINE VARIABLE data DENGAN TYPE List AGAR DAPAT MENAMPUNG COLLECTION / ARRAY
+  List data4 = [];
+  late String id;
+  //DEFINE VARIABLE data DENGAN TYPE List AGAR DAPAT MENAMPUNG COLLECTION / ARRAY
+  _retrieveValues() async {
+    User? currentUserInfo;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    if (userinfo != null) {
+      Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+      currentUserInfo = User.fromJson(userDataMap);
+      setState(() {
+        id = currentUserInfo?.id.toString() ?? "";
+      });
+      print(id);
+    }
+  }
 
   Future getData() async {
     // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 1)
-    var response = await http.get(Uri.parse(API.selecttrx));
+    User? currentUserInfo;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    Map<String, dynamic> userDataMap = jsonDecode(userinfo!);
+    currentUserInfo = User.fromJson(userDataMap);
+    var response = await http.post(Uri.parse(API.selecttrx), body: {
+      "id_pembeli": id,
+    });
     if (response.statusCode == 200) {
       setState(() {
         data = json.decode(response.body);
+        id = currentUserInfo?.id.toString() ?? "";
       });
       print(data);
       return data;
@@ -65,10 +87,13 @@ class _TrackingState extends State<Tracking>
   @override
   void initState() {
     super.initState();
+    id = "45";
     getData();
     getData2();
     getData3();
-    getData4(); //PANGGIL FUNGSI YANG TELAH DIBUAT SEBELUMNYA
+    getData4();
+    _retrieveValues();
+    //PANGGIL FUNGSI YANG TELAH DIBUAT SEBELUMNYA
   }
 
   @override

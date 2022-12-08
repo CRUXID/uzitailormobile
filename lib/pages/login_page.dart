@@ -90,6 +90,7 @@ class _LoginState extends State<Login> {
           Future.delayed(Duration(milliseconds: 2), () {
             Get.to(() => Home());
             print("Berhasil");
+            print(User);
           });
         } else {
           Fluttertoast.showToast(msg: "Email Or Password Is Wrong");

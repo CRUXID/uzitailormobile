@@ -13,31 +13,6 @@ class _RegisterState extends State<Register> {
   TextEditingController alamat = TextEditingController();
   var formkey = new GlobalKey<FormState>();
 
-  //bisa tp kurang bagus
-  // Future Regis() async {
-  //   var url = "http://192.168.18.6/uzitailor/API/register.php";
-  //   var response = await http.post(Uri.parse(url), body: {
-  //     "username": username.text,
-  //     "password": password.text,
-  //     "nama_pembeli": nama.text,
-  //     "no_hp": nohp.text,
-  //     "alamat": alamat.text
-  //   });
-  //   var data = json.decode(response.body);
-  //   if (data == "Error") {
-  //     print("gagal");
-  //     Fluttertoast.showToast(msg: "Username Telah Terdaftar");
-  //   } else {
-  //     print("sukses");
-  //     Fluttertoast.showToast(msg: "Register Berhasil");
-  //     Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => Login(),
-  //         ));
-  //   }
-  // }
-
   //nyoba yg lebih rapih
   validateUsername() async {
     try {
