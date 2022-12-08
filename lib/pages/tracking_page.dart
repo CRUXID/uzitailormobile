@@ -490,11 +490,7 @@ class _TrackingState extends State<Tracking>
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => faktur(),
-                                          ));
+                                      Get.to(() => faktur());
                                     },
                                     child: Text(
                                       "Pelunasan",
@@ -603,11 +599,7 @@ class _TrackingState extends State<Tracking>
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Riwayat(),
-                                          ));
+                                      Get.to(() => Riwayat());
                                     },
                                     child: Text(
                                       "Detail Pesanan",

@@ -88,11 +88,7 @@ class _LoginState extends State<Login> {
 
           // Fungsi pindah Activity dari Login ke Dashboard
           Future.delayed(Duration(milliseconds: 2), () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Home(),
-                ));
+            Get.to(() => Home());
             print("Berhasil");
           });
         } else {
@@ -193,25 +189,6 @@ class _LoginState extends State<Login> {
             SizedBox(
               height: 15,
             ),
-            RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Forgot Password ?',
-                    style: FontButton.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFFD90429)),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => forgot(),
-                            ));
-                      }),
-              ]),
-              textAlign: TextAlign.right,
-            ),
             SizedBox(
               height: 15,
             ),
@@ -260,11 +237,7 @@ class _LoginState extends State<Login> {
                         color: Color(0xFFD90429)),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Register(),
-                            ));
+                        Get.to(() => Register());
                       }),
               ]),
               textAlign: TextAlign.center,

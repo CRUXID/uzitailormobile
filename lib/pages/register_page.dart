@@ -39,7 +39,7 @@ class _RegisterState extends State<Register> {
   // }
 
   //nyoba yg lebih rapih
-  validateUserEmail() async {
+  validateUsername() async {
     try {
       var res = await http.post(
         Uri.parse(API.validate),
@@ -88,11 +88,7 @@ class _RegisterState extends State<Register> {
             alamat.clear();
             nohp.clear();
           });
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Login(),
-              ));
+          Get.to(Login());
         } else {
           Fluttertoast.showToast(msg: "Register Gagal");
         }
@@ -162,6 +158,7 @@ class _RegisterState extends State<Register> {
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.phone_android_outlined),
                         labelText: "No HP"),
+                    keyboardType: TextInputType.number,
                   ),
                   TextFormField(
                     validator: (val) => val == "" ? "Masukkan Password" : null,
@@ -195,7 +192,7 @@ class _RegisterState extends State<Register> {
                             borderRadius: BorderRadius.circular(100))),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        validateUserEmail();
+                        validateUsername();
                       }
 
                       // Navigator.push(
@@ -226,11 +223,7 @@ class _RegisterState extends State<Register> {
                         color: Color(0xFFD90429)),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Login(),
-                            ));
+                        Get.to(() => Login());
                       }),
               ]),
               textAlign: TextAlign.center,

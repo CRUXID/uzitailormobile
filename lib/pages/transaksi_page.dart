@@ -112,8 +112,8 @@ class _TransaksiState extends State<Transaksi> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    labelText: 'Jenis Kain',
-                    hintText: 'Pilih Jenis Kain',
+                    labelText: 'Harga',
+                    hintText: 'Pilih Harga',
                     //icon jenis kain
                     prefixIcon: Icon(Icons.format_paint),
                   ),

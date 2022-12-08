@@ -142,14 +142,14 @@ class _DashboardState extends State<Dashboard> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(20),
-                      child: Text(
-                        'Kemeja Lengan Panjang',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: SecondaryColor,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      // child: Text(
+                      //   'Kemeja Lengan Panjang',
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(
+                      //       fontSize: 14,
+                      //       color: SecondaryColor,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
                       margin: EdgeInsets.only(right: 15),
                       width: 200,
                       height: 350,

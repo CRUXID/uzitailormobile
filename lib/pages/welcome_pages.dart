@@ -27,7 +27,7 @@ class WelcomePage extends StatelessWidget {
             height: 15,
           ),
           Text(
-            "Halo Deck \nSelamat Datang di Aplikasi Uzi Tailor ",
+            "Halo \nSelamat Datang di Aplikasi Uzi Tailor ",
             style: FontIsi.copyWith(fontSize: 20),
             textAlign: TextAlign.center,
           ),
@@ -39,11 +39,7 @@ class WelcomePage extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 2 * defaultMargin,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Register(),
-                    ));
+                Get.to(() => Register());
               },
               child: Text(
                 "Create Account",
@@ -67,11 +63,7 @@ class WelcomePage extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 2 * defaultMargin,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Home(),
-                    ));
+                Get.to(() => Login());
               },
               child: Text(
                 "Login",

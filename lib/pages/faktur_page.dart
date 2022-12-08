@@ -255,7 +255,7 @@ class _fakturState extends State<faktur> {
             height: 20,
           ),
           ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(1),
               child: BarcodeWidget(
                 barcode: Barcode.code128(),
                 data: 'asadaada',
