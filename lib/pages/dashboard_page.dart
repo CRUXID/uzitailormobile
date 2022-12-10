@@ -10,6 +10,33 @@ class _DashboardState extends State<Dashboard> {
   final _pageController = PageController(viewportFraction: 0.877);
 
   double currentPage = 0;
+  late String id;
+  var data;
+
+  Future getDataTanggal() async {
+    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 1)
+    User? currentUserInfo;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    if (userinfo != null) {
+      Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+      currentUserInfo = User.fromJson(userDataMap);
+      setState(() {
+        id = currentUserInfo?.id.toString() ?? "";
+      });
+      print(id);
+    }
+    var response = await http.post(Uri.parse(API.selecttanggal), body: {
+      "id_pembeli": id,
+    });
+    if (response.statusCode == 200) {
+      setState(() {
+        data = json.decode(response.body);
+      });
+      print(data);
+      return data;
+    }
+  }
 
   //indicator handler
   @override
@@ -23,6 +50,7 @@ class _DashboardState extends State<Dashboard> {
       });
     });
     super.initState();
+    getDataTanggal();
   }
 
   @override
@@ -102,7 +130,7 @@ class _DashboardState extends State<Dashboard> {
                   height: 10,
                 ),
                 Text(
-                  'Rabu, 10 Oktober 2022',
+                  '$data',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

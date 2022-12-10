@@ -14,7 +14,11 @@ class _TrackingState extends State<Tracking>
   List data4 = [];
   late String id;
   //DEFINE VARIABLE data DENGAN TYPE List AGAR DAPAT MENAMPUNG COLLECTION / ARRAY
-  _retrieveValues() async {
+
+  //ambil id dari sharedpref
+
+  Future getData() async {
+    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 1)
     User? currentUserInfo;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userinfo = preferences.getString("currentUser");
@@ -26,22 +30,12 @@ class _TrackingState extends State<Tracking>
       });
       print(id);
     }
-  }
-
-  Future getData() async {
-    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 1)
-    User? currentUserInfo;
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? userinfo = preferences.getString("currentUser");
-    Map<String, dynamic> userDataMap = jsonDecode(userinfo!);
-    currentUserInfo = User.fromJson(userDataMap);
     var response = await http.post(Uri.parse(API.selecttrx), body: {
       "id_pembeli": id,
     });
     if (response.statusCode == 200) {
       setState(() {
         data = json.decode(response.body);
-        id = currentUserInfo?.id.toString() ?? "";
       });
       print(data);
       return data;
@@ -50,7 +44,20 @@ class _TrackingState extends State<Tracking>
 
   Future getData2() async {
     // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 2)
-    var response = await http.get(Uri.parse(API.selecttrx2));
+    User? currentUserInfo;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    if (userinfo != null) {
+      Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+      currentUserInfo = User.fromJson(userDataMap);
+      setState(() {
+        id = currentUserInfo?.id.toString() ?? "";
+      });
+      print(id);
+    }
+    var response = await http.post(Uri.parse(API.selecttrx2), body: {
+      "id_pembeli": id,
+    });
     if (response.statusCode == 200) {
       setState(() {
         data2 = json.decode(response.body);
@@ -62,7 +69,20 @@ class _TrackingState extends State<Tracking>
 
   Future getData3() async {
     // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 3)
-    var response = await http.get(Uri.parse(API.selecttrx3));
+    User? currentUserInfo;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    if (userinfo != null) {
+      Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+      currentUserInfo = User.fromJson(userDataMap);
+      setState(() {
+        id = currentUserInfo?.id.toString() ?? "";
+      });
+      print(id);
+    }
+    var response = await http.post(Uri.parse(API.selecttrx3), body: {
+      "id_pembeli": id,
+    });
     if (response.statusCode == 200) {
       setState(() {
         data3 = json.decode(response.body);
@@ -74,7 +94,20 @@ class _TrackingState extends State<Tracking>
 
   Future getData4() async {
     // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 4)
-    var response = await http.get(Uri.parse(API.selecttrx4));
+    User? currentUserInfo;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    if (userinfo != null) {
+      Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+      currentUserInfo = User.fromJson(userDataMap);
+      setState(() {
+        id = currentUserInfo?.id.toString() ?? "";
+      });
+      print(id);
+    }
+    var response = await http.post(Uri.parse(API.selecttrx4), body: {
+      "id_pembeli": id,
+    });
     if (response.statusCode == 200) {
       setState(() {
         data4 = json.decode(response.body);
@@ -87,12 +120,11 @@ class _TrackingState extends State<Tracking>
   @override
   void initState() {
     super.initState();
-    id = "45";
     getData();
     getData2();
     getData3();
     getData4();
-    _retrieveValues();
+
     //PANGGIL FUNGSI YANG TELAH DIBUAT SEBELUMNYA
   }
 
