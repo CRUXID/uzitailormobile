@@ -13,6 +13,9 @@ class _TransaksiState extends State<Transaksi> {
   String? _namabarang;
   String? selected2;
   List data = [];
+  List<trx> dataTransaksi = [];
+  int totaltransaksi = 0;
+  List<dynamic> databarang = [];
 
   Future _getData() async {
     var response = await http.get(Uri.parse(API.namabarang),
@@ -22,8 +25,9 @@ class _TransaksiState extends State<Transaksi> {
 
     setState(() {
       data = jsonData as List;
+      databarang = jsonData;
     });
-    print(jsonData);
+    print(databarang);
   }
 
   void initState() {
@@ -42,6 +46,7 @@ class _TransaksiState extends State<Transaksi> {
   String? _kain;
   //controller qty
   TextEditingController qty = TextEditingController();
+  TextEditingController harga = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +61,7 @@ class _TransaksiState extends State<Transaksi> {
         key: _formkey,
         child: Container(
           padding: EdgeInsets.all(10.0),
-          child: ListView(
+          child: Column(
             children: [
               SizedBox(
                 height: 25,
@@ -100,36 +105,27 @@ class _TransaksiState extends State<Transaksi> {
                   onChanged: (value) {
                     setState(() {
                       _namabarang = value as String?;
-                      print(value);
+                      int index = databarang
+                          .indexWhere((item) => item["nama_barang"] == value);
+                      print("<<<<<<<<<<<$value");
+                      harga.text = databarang[index]['harga'];
                     });
                   },
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(10),
-                child: DropdownButtonFormField(
+                child: TextFormField(
+                  controller: harga,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                     labelText: 'Harga',
-                    hintText: 'Pilih Harga',
-                    //icon jenis kain
-                    prefixIcon: Icon(Icons.format_paint),
+                    //icon qty
+                    prefixIcon: Icon(Icons.format_list_numbered),
                   ),
-                  value: selected2,
-                  items: data.map((List) {
-                    return DropdownMenuItem(
-                      child: Text(List['harga']),
-                      value: List['harga'],
-                    );
-                  }).toList(),
-                  onChanged: (value1) {
-                    setState(() {
-                      selected2 = value1 as String?;
-                      print(value1);
-                    });
-                  },
+                  keyboardType: TextInputType.number,
                 ),
               ),
               //container padding
@@ -162,6 +158,103 @@ class _TransaksiState extends State<Transaksi> {
                   child: const Text('Tambah'),
                 ),
               ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(10),
+                  itemCount: dataTransaksi.length,
+                  itemBuilder: (context, index) {
+                    int harga = int.parse(dataTransaksi[index].harga);
+                    int qty = int.parse(dataTransaksi[index].qty);
+                    int total = harga * qty;
+
+                    return Container(
+                        child: Card(
+                      shadowColor: Colors.black,
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [primaryColor, primaryColor],
+                          ),
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  dataTransaksi[index].namabarang,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                              ],
+                            ),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  dataTransaksi[index].qty,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 12),
+                                ),
+                                Text(
+                                  dataTransaksi[index].harga,
+                                  style: TextStyle(
+                                      color: Color(0xFF414460),
+                                      fontWeight: FontWeight.w200,
+                                      fontSize: 12),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.to(() => Riwayat());
+                                  },
+                                  child: Text(
+                                    "Detail Pesanan",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                        letterSpacing: 2),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: ThirdColor,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 10),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5))),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ));
+                  })
             ],
           ),
         ),
@@ -183,22 +276,18 @@ class _TransaksiState extends State<Transaksi> {
     });
   }
 
-  //void pilih ukuran
-  void pilihUkuran(String? value) {
-    setState(() {
-      selected2 = value;
-    });
-  }
-
-  //void pilih kain
-  void pilihKain(String? value) {
-    setState(() {
-      _kain = value;
-    });
-  }
-
   //void kirim data
   void kirimData() {
+    setState(() {
+      int barangqty = int.parse(qty.text);
+      int barangharga = int.parse(harga.text);
+      int total = barangqty * barangharga;
+      dataTransaksi
+          .add(trx(qty.text, _namabarang.toString(), total.toString()));
+      totaltransaksi += total;
+      print(dataTransaksi.length);
+      print(totaltransaksi);
+    });
     //alert dialog
     AlertDialog alertDialog = AlertDialog(
       content: Container(

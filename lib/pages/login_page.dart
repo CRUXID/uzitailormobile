@@ -11,59 +11,6 @@ class _LoginState extends State<Login> {
   TextEditingController pass = TextEditingController();
   var formkey = new GlobalKey<FormState>();
 
-  // Future login2() async {
-  //   var url = "http://192.168.18.6/uzitailor/API/login1.php";
-  //   var response = await http.post(Uri.parse(url), body: {
-  //     "username": user.text,
-  //     "password": pass.text,
-  //   });
-  //   var data = json.decode(response.body);
-  //   if (data == "error") {
-  //     print("gagal");
-  //     Fluttertoast.showToast(
-  //         msg: "Username atau Password Salah",
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.CENTER,
-  //         timeInSecForIosWeb: 1,
-  //         backgroundColor: Colors.red,
-  //         textColor: Colors.white,
-  //         fontSize: 16.0);
-  //   } else {
-  //     print("berhasil");
-  //     Fluttertoast.showToast(
-  //         msg: "Sealamat Datang",
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.CENTER,
-  //         timeInSecForIosWeb: 1,
-  //         backgroundColor: Colors.red,
-  //         textColor: Colors.white,
-  //         fontSize: 16.0);
-  //     Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => Home(),
-  //         ));
-  //   }
-  // }
-
-  // Future login() async {
-  //   final url = "http://192.168.18.6/uzitailor/API/cek_login.php";
-  //   var response = await http.post(Uri.parse(url),
-  //       body: {"username": user.text, "password": pass.text});
-
-  //   var data = jsonDecode(response.body);
-  //   if (data == "success") {
-  //     Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => Home(),
-  //         ));
-  //     Fluttertoast.showToast(msg: "Login Succesfully :)");
-  //   } else {
-  //     print("gagal");
-  //   }
-  // }
-
   Login() async {
     try {
       var res = await http.post(

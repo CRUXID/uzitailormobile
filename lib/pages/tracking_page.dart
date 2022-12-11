@@ -230,7 +230,7 @@ class _TrackingState extends State<Tracking>
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      data[index]['sub_total'],
+                                      data[index]['harga'],
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
                                           color: Colors.black,
@@ -369,7 +369,7 @@ class _TrackingState extends State<Tracking>
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      data2[index]['sub_total'],
+                                      data2[index]['harga'],
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
                                           color: Colors.black,
@@ -403,7 +403,7 @@ class _TrackingState extends State<Tracking>
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: null,
                                     child: Text(
                                       "Pelunasan",
                                       style: TextStyle(
@@ -507,7 +507,7 @@ class _TrackingState extends State<Tracking>
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      data3[index]['sub_total'],
+                                      data3[index]['harga'],
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
                                           color: Colors.black,

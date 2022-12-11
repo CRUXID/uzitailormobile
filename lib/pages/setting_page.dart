@@ -17,7 +17,6 @@ class _SettingState extends State<Setting> {
       var res = await http.post(
         Uri.parse(API.edit),
         body: {
-          'id': id.text.trim(),
           'username': user.text.trim(),
           'nama_pembeli': nama.text.trim(),
           'alamat': alamat.text.trim(),
@@ -29,17 +28,15 @@ class _SettingState extends State<Setting> {
       {
         var result = jsonDecode(res.body);
 
-        if (result['berhasil'] == true) {
-          Fluttertoast.showToast(msg: "Data Berhasil Di Edit");
+        if (result['Berhasil'] == true) {
+          User userinfo = User.fromJson(result["userData"]);
+
+          // save userInfo to local storage pake Shared Preferences
+          await RememberUserPrefs.storeUserInfo(userinfo);
+
           // Fungsi pindah Activity dari Login ke Dashboard
-          Future.delayed(Duration(milliseconds: 2), () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Setting(),
-                ));
-            print("berhasil");
-          });
+          Future.delayed(Duration(milliseconds: 2), () {});
+          Fluttertoast.showToast(msg: "Data berhasil");
         } else {
           Fluttertoast.showToast(msg: "Data Gagal Di Edit");
           print("jsdbskjdbka");
@@ -86,11 +83,7 @@ class _SettingState extends State<Setting> {
             IconButton(
                 onPressed: () async {
                   await RememberUserPrefs.removeUserInfo();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Login(),
-                      ));
+                  Get.to(() => Login());
                   Fluttertoast.showToast(msg: "Logout ");
                 },
                 icon: new Icon(
@@ -165,7 +158,7 @@ class _SettingState extends State<Setting> {
                     controller: nohp,
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.phone_android_outlined),
-                        hintText: "nohp"),
+                        labelText: "No HP"),
                     keyboardType: TextInputType.number,
                   ),
                   TextFormField(
@@ -197,49 +190,6 @@ class _SettingState extends State<Setting> {
               ),
             ),
           ),
-
-          // Container(
-          //   // margin: EdgeInsets.only(top:),
-          //   width: double.infinity,
-          //   height: 250,
-          //   decoration: BoxDecoration(
-          //     color: Color(0xFFEF233C),
-          //     borderRadius: BorderRadius.only(
-          //         bottomRight: Radius.circular(150),
-          //         bottomLeft: Radius.circular(150)),
-          //   ),
-          // ),
         ]));
-  }
-
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 30),
-      child: TextField(
-        cursorColor: SecondaryColor,
-        obscureText: isPasswordTextField ? isObscurePassword : false,
-        decoration: InputDecoration(
-          suffixIcon: isPasswordTextField
-              ? IconButton(
-                  icon: Icon(
-                    Icons.remove_red_eye,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isObscurePassword = !isObscurePassword;
-                    });
-                  })
-              : null,
-          contentPadding: EdgeInsets.only(bottom: 5),
-          labelText: labelText,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          hintText: placeholder,
-          hintStyle: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w500, color: FifthColor),
-        ),
-      ),
-    );
   }
 }
