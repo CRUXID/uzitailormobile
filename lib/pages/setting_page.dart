@@ -143,13 +143,8 @@ class _SettingState extends State<Setting> {
                     height: 30,
                   ),
                   TextField(
-                    controller: id,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person_outline),
-                        labelText: "ID Pembeli"),
-                  ),
-                  TextField(
                     controller: user,
+                    enabled: false,
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.person_outline),
                         labelText: "Username"),

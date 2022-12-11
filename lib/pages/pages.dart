@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,13 +26,12 @@ import '../main.dart';
 import '../model/user.dart';
 import 'package:uzitailor/pref/current_user.dart';
 import '../pref/user_pref.dart';
+import 'package:uzitailor/model/faktur.dart';
 
 part 'welcome_pages.dart';
 part 'login_page.dart';
 part 'register_page.dart';
 part 'dashboard_page.dart';
-part 'forgot_page.dart';
-part 'reset_page.dart';
 part 'home_page.dart';
 part 'transaksi_page.dart';
 part 'setting_page.dart';

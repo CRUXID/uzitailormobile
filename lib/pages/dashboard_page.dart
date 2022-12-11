@@ -14,7 +14,7 @@ class _DashboardState extends State<Dashboard> {
   var data;
 
   Future getDataTanggal() async {
-    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 1)
+    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON
     User? currentUserInfo;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userinfo = preferences.getString("currentUser");
