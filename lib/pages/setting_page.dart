@@ -158,7 +158,7 @@ class _SettingState extends State<Setting> {
                     controller: nohp,
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.phone_android_outlined),
-                        labelText: "No HP"),
+                        hintText: "nohp"),
                     keyboardType: TextInputType.number,
                   ),
                   TextFormField(
