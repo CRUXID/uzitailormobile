@@ -17,6 +17,8 @@ class _TransaksiState extends State<Transaksi> {
   int totaltransaksi = 0;
   List<dynamic> databarang = [];
 
+  DateTime dateToday = new DateTime.now();
+
   Future _getData() async {
     var response = await http.get(Uri.parse(API.namabarang),
         headers: {"Accept": "application/json"});
@@ -28,6 +30,7 @@ class _TransaksiState extends State<Transaksi> {
       databarang = jsonData;
     });
     print(databarang);
+    print(dateToday);
   }
 
   void initState() {
@@ -260,7 +263,7 @@ class _TransaksiState extends State<Transaksi> {
                             ),
                           ),
                           Text(
-                            "Rp.900.000",
+                            "Rp. $totaltransaksi",
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 color: primaryColor),
