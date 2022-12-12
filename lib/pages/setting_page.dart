@@ -36,7 +36,7 @@ class _SettingState extends State<Setting> {
 
           // Fungsi pindah Activity dari Login ke Dashboard
           Future.delayed(Duration(milliseconds: 2), () {});
-          Fluttertoast.showToast(msg: "Data berhasil");
+          Fluttertoast.showToast(msg: "Data berhasil di Edit");
         } else {
           Fluttertoast.showToast(msg: "Data Gagal Di Edit");
           print("jsdbskjdbka");
@@ -158,7 +158,7 @@ class _SettingState extends State<Setting> {
                     controller: nohp,
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.phone_android_outlined),
-                        hintText: "nohp"),
+                        labelText: "No HP"),
                     keyboardType: TextInputType.number,
                   ),
                   TextFormField(

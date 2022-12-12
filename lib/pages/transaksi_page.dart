@@ -51,26 +51,21 @@ class _TransaksiState extends State<Transaksi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         title: Text('Transaksi'),
         centerTitle: true,
         backgroundColor: SecondaryColor,
         automaticallyImplyLeading: false,
       ),
-      body: ListView(
-        
-        key: _formkey,
-        children: [ Container(
+      body: ListView(key: _formkey, children: [
+        Container(
           padding: EdgeInsets.all(10.0),
           child: Column(
-            
             children: [
               SizedBox(
                 height: 25,
               ),
               Container(
-                
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 12),
                 //text with icon
                 child: Row(
@@ -163,7 +158,6 @@ class _TransaksiState extends State<Transaksi> {
                 ),
               ),
               ListView.builder(
-                
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(10),
                   itemCount: dataTransaksi.length,
@@ -174,7 +168,6 @@ class _TransaksiState extends State<Transaksi> {
 
                     return Container(
                         child: Card(
-                      
                       shadowColor: Colors.black,
                       clipBehavior: Clip.antiAlias,
                       elevation: 8,
@@ -188,24 +181,24 @@ class _TransaksiState extends State<Transaksi> {
                         ),
                         padding: EdgeInsets.all(10),
                         child: Column(
-                        
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            
                             Row(
-                              
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                
                                 Text(
                                   dataTransaksi[index].namabarang,
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14),
-                                      
                                 ),
-                                IconButton(onPressed: (){} , icon: Icon(Icons.cancel, size: 20,))
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.cancel,
+                                      size: 20,
+                                    ))
                               ],
                             ),
                             Divider(
@@ -238,41 +231,59 @@ class _TransaksiState extends State<Transaksi> {
                               color: Color(0xFF8D99AE),
                               thickness: 1,
                             ),
-                            
                           ],
                         ),
                       ),
-                    )
-                    );
+                    ));
                   }),
 
-                  //Total
-                  Padding(padding: const EdgeInsets.fromLTRB(15, 35, 15, 0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: ThirdColor, borderRadius: BorderRadius.circular(25),
-                    ),
-                    padding: EdgeInsets.all(24),
-                    
-                    child: Row(
-                      
-                      children: [
+              //Total
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 35, 15, 0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThirdColor,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  padding: EdgeInsets.all(24),
+                  child: Row(
+                    children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //Icon(Icons.card_travel_sharp, color: SecondaryColor,),
-                          Text("Total Harga", style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor,),),
-                          Text("Rp.900.000", style: TextStyle(fontWeight: FontWeight.w400, color: primaryColor),),
-                          SizedBox(height: 8,),
-                          Text("Hubungi penjual : Kirim bukti pembayaran DP 50%", style: TextStyle(fontSize: 11,fontWeight: FontWeight.w300, color: primaryColor),)
+                          Text(
+                            "Total Harga",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: primaryColor,
+                            ),
+                          ),
+                          Text(
+                            "Rp.900.000",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: primaryColor),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            "Hubungi penjual : Kirim bukti pembayaran DP 50%",
+                            style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w300,
+                                color: primaryColor),
+                          )
                         ],
                       ),
-                    ],),
+                    ],
                   ),
-                  ),
+                ),
+              ),
 
-                  //Button Pesan
-                  Container(
+              //Button Pesan
+              Container(
                 alignment: Alignment.centerRight,
                 padding: const EdgeInsets.all(10),
                 child: ElevatedButton(
@@ -284,8 +295,6 @@ class _TransaksiState extends State<Transaksi> {
                   child: const Text('Pesan'),
                 ),
               ),
-                  
-
             ],
           ),
         ),
@@ -321,14 +330,10 @@ class _TransaksiState extends State<Transaksi> {
     });
     //alert dialog
     AlertDialog alertDialog = AlertDialog(
-      
       content: Container(
-        
         height: 200,
-        
         child: Column(
           children: [
-            
             Text("Nama Barang: $_namabarang"),
             Text("Jenis Kain : $selected2"),
             Text("Qty : ${qty.text}"),
