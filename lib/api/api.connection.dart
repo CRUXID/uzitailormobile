@@ -2,7 +2,7 @@ import 'package:uzitailor/pages/pages.dart';
 
 class API {
   static const hostConnect = "http://192.168.18.6/uzitailor/API/";
-  static const hostConnect2 = "http://192.168.18.6/uzitailor/API/";
+  static const hostConnect2 = "http://10.10.4.245/uzitailor/API/";
 
   static const Login = "$hostConnect2/login1.php";
   static const Register = "$hostConnect2/register.php";
