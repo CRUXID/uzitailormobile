@@ -295,7 +295,7 @@ class _TrackingState extends State<Tracking>
               //proses
               ListView.builder(
                   padding: const EdgeInsets.all(10),
-                  itemCount: data2 == null ? 0 : data2.length,
+                  itemCount: data2.length,
                   itemBuilder: (context, index) {
                     if (data2.length == null) {
                       return Text("Tidak ada Transaksi Proses");
@@ -341,27 +341,66 @@ class _TrackingState extends State<Tracking>
                                 color: Color(0xFF8D99AE),
                                 thickness: 1,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data2[index]['nama_barang'],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  ),
-                                  Text(
-                                    data2[index]['qty'],
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  )
-                                ],
-                              ),
+                              //COBA
+                              ListView.builder(
+                                  padding: const EdgeInsets.all(10),
+                                  itemCount: data == null ? 0 : data.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                        child: Card(
+                                            shadowColor: Colors.black,
+                                            clipBehavior: Clip.antiAlias,
+                                            elevation: 8,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    primaryColor,
+                                                    primaryColor
+                                                  ],
+                                                ),
+                                              ),
+                                              padding: EdgeInsets.all(10),
+                                              child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          data2[index]
+                                                              ['nama_barang'],
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              fontSize: 12),
+                                                        ),
+                                                        Text(
+                                                          data2[index]['qty'],
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              fontSize: 12),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ]),
+                                            )));
+                                  }),
                               SizedBox(
                                 height: 10.0,
                               ),
