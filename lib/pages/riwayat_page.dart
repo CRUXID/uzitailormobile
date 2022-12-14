@@ -8,6 +8,28 @@ class Riwayat extends StatefulWidget {
 }
 
 class _RiwayatState extends State<Riwayat> {
+  List data = [];
+  List<dynamic> dataRiwayat = [];
+  Future _getData() async {
+    var response = await http.get(Uri.parse(API.selectRiwayat),
+        headers: {"Accept": "application/json"});
+    var jsonBody = response.body;
+    final List<dynamic> jsonData = jsonDecode(jsonBody);
+
+    setState(() {
+      data = jsonData as List;
+      dataRiwayat = jsonData;
+    });
+    print(dataRiwayat);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

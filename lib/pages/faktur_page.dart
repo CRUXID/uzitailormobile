@@ -10,6 +10,8 @@ class faktur extends StatefulWidget {
 class _fakturState extends State<faktur> {
   late Future<fakturm> futurefaktur;
   late Map<String, dynamic> faktur;
+  List data = [];
+  List<dynamic> datafaktur = [];
 
   Future<fakturm> fetchfaktur() async {
     final response = await http.get(Uri.parse(API.selectfaktur));
@@ -25,10 +27,24 @@ class _fakturState extends State<faktur> {
     }
   }
 
+  Future _getData() async {
+    var response = await http.get(Uri.parse(API.selectfaktur),
+        headers: {"Accept": "application/json"});
+    var jsonBody = response.body;
+    final List<dynamic> jsonData = jsonDecode(jsonBody);
+
+    setState(() {
+      data = jsonData as List;
+      datafaktur = jsonData;
+    });
+    print(datafaktur);
+  }
+
   @override
   void initState() {
     super.initState();
     futurefaktur = fetchfaktur();
+    _getData();
   }
 
   @override

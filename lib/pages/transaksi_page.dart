@@ -16,8 +16,128 @@ class _TransaksiState extends State<Transaksi> {
   List<trx> dataTransaksi = [];
   int totaltransaksi = 0;
   List<dynamic> databarang = [];
+  late String id;
+  var dateNow = DateTime.now();
+  var kode = DateFormat('yyMMddss').format(DateTime.now());
 
-  DateTime dateToday = new DateTime.now();
+  inserttrx() async {
+    User? currentUserInfo;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    if (userinfo != null) {
+      Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+      currentUserInfo = User.fromJson(userDataMap);
+      setState(() {
+        id = currentUserInfo?.id.toString() ?? "";
+      });
+      print(id);
+    }
+    try {
+      var res = await http.post(
+        Uri.parse(API.inserttrx),
+        body: {
+          'kode_transaksi': kode.toString(),
+          'waktu': dateNow.toString(),
+          'id_pembeli': id.toString(),
+          'total': totaltransaksi.toString(),
+        },
+      );
+
+      if (res.statusCode == 200) //Connection with API to server is succes
+      {
+        var result = jsonDecode(res.body);
+
+        if (result['Berhasil'] == true) {
+          // Fungsi pindah Activity dari Login ke Dashboard
+          Future.delayed(Duration(milliseconds: 2), () {
+            Fluttertoast.showToast(msg: "Berhasil Melakukan Transaksi");
+            print("Berhasil");
+          });
+        } else {
+          Fluttertoast.showToast(msg: "Gagal menambah transaksi");
+        }
+      }
+    } catch (errorMsg) {
+      Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
+      print("Error :: " + errorMsg.toString());
+    }
+  }
+
+  insertdetailtrx() async {
+    try {
+      var res = await http.post(
+        Uri.parse(API.inserttrx),
+        body: {
+          'kode_transaksi': kode.toString(),
+          'kode_barang': dateNow.toString(),
+          'qty': id.toString(),
+          'sub_total': totaltransaksi.toString(),
+          'catatan': totaltransaksi.toString(),
+        },
+      );
+
+      if (res.statusCode == 200) //Connection with API to server is succes
+      {
+        var result = jsonDecode(res.body);
+
+        if (result['Berhasil'] == true) {
+          // Fungsi pindah Activity dari Login ke Dashboard
+          Future.delayed(Duration(milliseconds: 2), () {
+            Fluttertoast.showToast(msg: "Berhasil Melakukan Transaksi");
+            print("Berhasil");
+          });
+        } else {
+          Fluttertoast.showToast(msg: "Gagal menambah transaksi");
+        }
+      }
+    } catch (errorMsg) {
+      Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
+      print("Error :: " + errorMsg.toString());
+    }
+  }
+
+  void kirimData() {
+    setState(() {
+      int barangqty = int.parse(qty.text);
+      int barangharga = int.parse(harga.text);
+      int total = barangqty * barangharga;
+      dataTransaksi
+          .add(trx(qty.text, _namabarang.toString(), total.toString()));
+      totaltransaksi += total;
+      print(dataTransaksi.length);
+      print(totaltransaksi);
+    });
+    //alert dialog
+    AlertDialog alertDialog = AlertDialog(
+      content: Container(
+        height: 200,
+        child: Column(
+          children: [
+            Text("Nama Barang: $_namabarang"),
+            Text("Jenis Kain : $selected2"),
+            Text("Qty : ${qty.text}"),
+            //padding
+            const Padding(padding: EdgeInsets.all(10)),
+            //button
+            ElevatedButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                Color:
+                Colors.purple;
+              },
+            )
+          ],
+        ),
+      ),
+    );
+    //show dialog
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
+  }
 
   Future _getData() async {
     var response = await http.get(Uri.parse(API.namabarang),
@@ -30,7 +150,8 @@ class _TransaksiState extends State<Transaksi> {
       databarang = jsonData;
     });
     print(databarang);
-    print(dateToday);
+    print(dateNow);
+    print(kode);
   }
 
   void initState() {
@@ -109,7 +230,7 @@ class _TransaksiState extends State<Transaksi> {
                       _namabarang = value as String?;
                       int index = databarang
                           .indexWhere((item) => item["nama_barang"] == value);
-                      print("<<<<<<<<<<<$value");
+                      print("$value");
                       harga.text = databarang[index]['harga'];
                     });
                   },
@@ -293,7 +414,7 @@ class _TransaksiState extends State<Transaksi> {
                   //change color button
                   style: ElevatedButton.styleFrom(primary: Color(0xFF2B2D42)),
                   onPressed: () {
-                    kirimData();
+                    inserttrx();
                   },
                   child: const Text('Pesan'),
                 ),
@@ -305,13 +426,6 @@ class _TransaksiState extends State<Transaksi> {
     );
   }
 
-  //void pilih pembeli
-  void pilihPembeli(String? value) {
-    setState(() {
-      _pembeli = value;
-    });
-  }
-
   //void pilih nama barang
   void pilihNamaBarang(String? value) {
     setState(() {
@@ -320,46 +434,5 @@ class _TransaksiState extends State<Transaksi> {
   }
 
   //void kirim data
-  void kirimData() {
-    setState(() {
-      int barangqty = int.parse(qty.text);
-      int barangharga = int.parse(harga.text);
-      int total = barangqty * barangharga;
-      dataTransaksi
-          .add(trx(qty.text, _namabarang.toString(), total.toString()));
-      totaltransaksi += total;
-      print(dataTransaksi.length);
-      print(totaltransaksi);
-    });
-    //alert dialog
-    AlertDialog alertDialog = AlertDialog(
-      content: Container(
-        height: 200,
-        child: Column(
-          children: [
-            Text("Nama Barang: $_namabarang"),
-            Text("Jenis Kain : $selected2"),
-            Text("Qty : ${qty.text}"),
-            //padding
-            const Padding(padding: EdgeInsets.all(10)),
-            //button
-            ElevatedButton(
-              child: Text("OK"),
-              onPressed: () {
-                Navigator.pop(context);
-                Color:
-                Colors.purple;
-              },
-            )
-          ],
-        ),
-      ),
-    );
-    //show dialog
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alertDialog;
-        });
-  }
+
 }
