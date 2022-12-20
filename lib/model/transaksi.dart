@@ -1,4 +1,4 @@
-class trx {
+class trans {
   int id;
   String waktu;
   String namabarang;
@@ -8,7 +8,7 @@ class trx {
   int dibayar;
   int sisapembayaran;
 
-  trx(
+  trans(
     this.id,
     this.waktu,
     this.namabarang,
@@ -19,7 +19,7 @@ class trx {
     this.sisapembayaran,
   );
 
-  factory trx.fromJson(Map<String, dynamic> json) => trx(
+  factory trans.fromJson(Map<String, dynamic> json) => trans(
         int.parse(json["kode_transaksi"]),
         json["waktu"],
         json["nama_barang"],

@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: FutureBuilder(
             future: RememberUserPrefs.readUserInfo(),
-            builder: (context, dataSnapShot) {
-              if (dataSnapShot.data == null) {
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
                 return WelcomePage();
               } else {
                 return Home();

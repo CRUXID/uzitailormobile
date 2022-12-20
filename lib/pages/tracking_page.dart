@@ -10,15 +10,55 @@ class _TrackingState extends State<Tracking>
   late TabController _tabController = new TabController(length: 4, vsync: this);
   List data = [];
   List data2 = [];
+  List data21 = [];
+  List datacoba = [];
+  List datacoba2 = [];
   List data3 = [];
   List data4 = [];
   late String id;
-  //DEFINE VARIABLE data DENGAN TYPE List AGAR DAPAT MENAMPUNG COLLECTION / ARRAY
+  List<Trackstatus> _list1 = [];
+  List<Trackstatus> _list2 = [];
+  List<Trackstatus> _list3 = [];
+  List<Trackstatus> _list4 = [];
 
-  //ambil id dari sharedpref
+  List<Barang> _listbrg = [];
+  var loading = false;
 
-  Future getData() async {
-    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 1)
+  // Future<Trackstatus> fetchInfo() async {
+  //   User? currentUserInfo;
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   String? userinfo = preferences.getString("currentUser");
+  //   if (userinfo != null) {
+  //     Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+  //     currentUserInfo = User.fromJson(userDataMap);
+  //     setState(() {
+  //       id = currentUserInfo?.id.toString() ?? "";
+  //     });
+  //     print(id);
+  //   }
+
+  //   var response = await http.post(Uri.parse(API.status1), body: {
+  //     "id_pembeli": id,
+  //   });
+  //   final jsonresponse = json.decode(response.body);
+  //   print('ini jsonresponse baru $jsonresponse');
+  //   return Trackstatus.fromJson(jsonresponse[0]);
+  // }
+  // Trackstatus track = Trackstatus();
+  // List<Barang> detail = [];
+
+  // getdatttaa() async {
+  //   await sevice().getService().then((value) {
+  //     setState(() {
+  //       track = value;
+  //       detail = track.barang;
+  //     });
+  //   });
+  // }
+  Future<Null> _ambildata1() async {
+    setState(() {
+      loading = true;
+    });
     User? currentUserInfo;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userinfo = preferences.getString("currentUser");
@@ -30,20 +70,26 @@ class _TrackingState extends State<Tracking>
       });
       print(id);
     }
-    var response = await http.post(Uri.parse(API.selecttrx), body: {
+
+    final response = await http.post(Uri.parse(API.status1), body: {
       "id_pembeli": id,
     });
     if (response.statusCode == 200) {
+      final ambill = jsonDecode(response.body);
       setState(() {
-        data = json.decode(response.body);
+        for (Map i in ambill) {
+          _list1.add(Trackstatus.fromJson(ambill[_list1.length]));
+        }
+        loading = false;
+        print('data status 1 $ambill');
       });
-      print(data);
-      return data;
     }
   }
 
-  Future getData2() async {
-    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 2)
+  Future<Null> _ambildata2() async {
+    setState(() {
+      loading = true;
+    });
     User? currentUserInfo;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userinfo = preferences.getString("currentUser");
@@ -55,20 +101,26 @@ class _TrackingState extends State<Tracking>
       });
       print(id);
     }
-    var response = await http.post(Uri.parse(API.selecttrx2), body: {
+
+    final response = await http.post(Uri.parse(API.status2), body: {
       "id_pembeli": id,
     });
     if (response.statusCode == 200) {
+      final ambill = jsonDecode(response.body);
       setState(() {
-        data2 = json.decode(response.body);
+        for (Map i in ambill) {
+          _list2.add(Trackstatus.fromJson(ambill[_list2.length]));
+        }
+        loading = false;
+        print('data status 2 $ambill');
       });
-      print(data2);
-      return data2;
     }
   }
 
-  Future getData3() async {
-    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 3)
+  Future<Null> _ambildata3() async {
+    setState(() {
+      loading = true;
+    });
     User? currentUserInfo;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userinfo = preferences.getString("currentUser");
@@ -80,20 +132,26 @@ class _TrackingState extends State<Tracking>
       });
       print(id);
     }
-    var response = await http.post(Uri.parse(API.selecttrx3), body: {
+
+    final response = await http.post(Uri.parse(API.status3), body: {
       "id_pembeli": id,
     });
     if (response.statusCode == 200) {
+      final ambill = jsonDecode(response.body);
       setState(() {
-        data3 = json.decode(response.body);
+        for (Map i in ambill) {
+          _list3.add(Trackstatus.fromJson(ambill[_list3.length]));
+        }
+        loading = false;
+        print('data status 3 $ambill');
       });
-      print(data3);
-      return data3;
     }
   }
 
-  Future getData4() async {
-    // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON (TRX STATUS 4)
+  Future<Null> _ambildata4() async {
+    setState(() {
+      loading = true;
+    });
     User? currentUserInfo;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userinfo = preferences.getString("currentUser");
@@ -105,27 +163,29 @@ class _TrackingState extends State<Tracking>
       });
       print(id);
     }
-    var response = await http.post(Uri.parse(API.selecttrx4), body: {
+
+    final response = await http.post(Uri.parse(API.status4), body: {
       "id_pembeli": id,
     });
     if (response.statusCode == 200) {
+      final ambill = jsonDecode(response.body);
       setState(() {
-        data4 = json.decode(response.body);
+        for (Map i in ambill) {
+          _list4.add(Trackstatus.fromJson(ambill[_list4.length]));
+        }
+        loading = false;
+        print('data status 4 $ambill');
       });
-      print(data4);
-      return data4;
     }
   }
 
   @override
   void initState() {
     super.initState();
-    getData();
-    getData2();
-    getData3();
-    getData4();
-
-    //PANGGIL FUNGSI YANG TELAH DIBUAT SEBELUMNYA
+    _ambildata1();
+    _ambildata2();
+    _ambildata3();
+    _ambildata4();
   }
 
   @override
@@ -159,8 +219,9 @@ class _TrackingState extends State<Tracking>
               //pending
               ListView.builder(
                   padding: const EdgeInsets.all(10),
-                  itemCount: data == null ? 0 : data.length,
-                  itemBuilder: (context, index) {
+                  itemCount: _list1.length,
+                  itemBuilder: (context, i) {
+                    final x1 = _list1[i];
                     return Container(
                       child: Card(
                         shadowColor: Colors.black,
@@ -183,7 +244,7 @@ class _TrackingState extends State<Tracking>
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    data[index]['waktu'],
+                                    x1.waktu,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -202,42 +263,93 @@ class _TrackingState extends State<Tracking>
                                 color: Color(0xFF8D99AE),
                                 thickness: 1,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data[index]['nama_barang'],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  ),
-                                  Text(
-                                    data[index]['qty'],
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      data[index]['harga'],
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 12),
-                                    ),
-                                  ]),
+                              //COBA
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  padding: const EdgeInsets.all(10),
+                                  itemCount: x1.barang.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                        child: Card(
+                                            shadowColor: Colors.black,
+                                            clipBehavior: Clip.antiAlias,
+                                            elevation: 8,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    primaryColor,
+                                                    primaryColor
+                                                  ],
+                                                ),
+                                              ),
+                                              padding: EdgeInsets.all(10),
+                                              child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          x1.barang[index]
+                                                              .namaBarang
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              fontSize: 12),
+                                                        ),
+                                                        Text(
+                                                          x1.barang[index].qty
+                                                              .toString(),
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              fontSize: 12),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Text(
+                                                            x1.barang[index]
+                                                                .subTotal
+                                                                .toString(),
+                                                            textAlign:
+                                                                TextAlign.end,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                                fontSize: 12),
+                                                          ),
+                                                        ]),
+                                                  ]),
+                                            )));
+                                  }),
+
                               SizedBox(
                                 height: 10.0,
                               ),
@@ -249,7 +361,7 @@ class _TrackingState extends State<Tracking>
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      data[index]['total'],
+                                      x1.total,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w400,
@@ -291,101 +403,121 @@ class _TrackingState extends State<Tracking>
                         ),
                       ),
                     );
-                  }), //end pending
+                  }),
+              //end pending
               //proses
               ListView.builder(
                   padding: const EdgeInsets.all(10),
-                  itemCount: data2.length,
-                  itemBuilder: (context, index) {
-                    if (data2.length == null) {
-                      return Text("Tidak ada Transaksi Proses");
-                    } else {
-                      return Container(
-                          child: Card(
-                        shadowColor: Colors.black,
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [primaryColor, primaryColor],
-                            ),
+                  itemCount: _list2.length,
+                  itemBuilder: (context, i) {
+                    final x = _list2[i];
+                    return Container(
+                        child: Card(
+                      shadowColor: Colors.black,
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [primaryColor, primaryColor],
                           ),
-                          padding: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data2[index]['waktu'],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  Text(
-                                    "Sedang Diproses",
-                                    style: TextStyle(
-                                        color: Color(0xFF414460),
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 12),
-                                  )
-                                ],
-                              ),
-                              Divider(
-                                color: Color(0xFF8D99AE),
-                                thickness: 1,
-                              ),
-                              //COBA
-                              ListView.builder(
-                                  padding: const EdgeInsets.all(10),
-                                  itemCount: data == null ? 0 : data.length,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                        child: Card(
-                                            shadowColor: Colors.black,
-                                            clipBehavior: Clip.antiAlias,
-                                            elevation: 8,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    primaryColor,
-                                                    primaryColor
-                                                  ],
-                                                ),
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  x.waktu,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                                Text(
+                                  "Sedang Diproses",
+                                  style: TextStyle(
+                                      color: Color(0xFF414460),
+                                      fontWeight: FontWeight.w200,
+                                      fontSize: 12),
+                                )
+                              ],
+                            ),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            //COBA
+                            ListView.builder(
+                                shrinkWrap: true,
+                                padding: const EdgeInsets.all(10),
+                                itemCount: x.barang.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                      child: Card(
+                                          shadowColor: Colors.black,
+                                          clipBehavior: Clip.antiAlias,
+                                          elevation: 8,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  primaryColor,
+                                                  primaryColor
+                                                ],
                                               ),
-                                              padding: EdgeInsets.all(10),
-                                              child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
+                                            ),
+                                            padding: EdgeInsets.all(10),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        x.barang[index]
+                                                            .namaBarang
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                            fontSize: 12),
+                                                      ),
+                                                      Text(
+                                                        x.barang[index].qty
+                                                            .toString(),
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                            fontSize: 12),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
+                                                          MainAxisAlignment.end,
                                                       children: [
                                                         Text(
-                                                          data2[index]
-                                                              ['nama_barang'],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300,
-                                                              fontSize: 12),
-                                                        ),
-                                                        Text(
-                                                          data2[index]['qty'],
+                                                          x.barang[index]
+                                                              .subTotal
+                                                              .toString(),
                                                           textAlign:
                                                               TextAlign.end,
                                                           style: TextStyle(
@@ -395,325 +527,387 @@ class _TrackingState extends State<Tracking>
                                                                   FontWeight
                                                                       .w300,
                                                               fontSize: 12),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ]),
-                                            )));
-                                  }),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      data2[index]['harga'],
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 12),
-                                    ),
-                                  ]),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Divider(
-                                color: Color(0xFF8D99AE),
-                                thickness: 1,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      data2[index]['total'],
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14),
-                                    ),
-                                  ]),
-                              Divider(
-                                color: Color(0xFF8D99AE),
-                                thickness: 1,
-                              ),
-                              Row(
+                                                        ),
+                                                      ]),
+                                                ]),
+                                          )));
+                                }),
+
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  ElevatedButton(
-                                    onPressed: null,
-                                    child: Text(
-                                      "Pelunasan",
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                        primary:
-                                            Color.fromARGB(104, 217, 4, 39),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5))),
+                                  Text(
+                                    x.total,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
                                   ),
-                                ],
-                              )
-                            ],
-                          ),
+                                ]),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: null,
+                                  child: Text(
+                                    "Pelunasan",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                        letterSpacing: 2),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Color.fromARGB(104, 217, 4, 39),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 10),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5))),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                      ));
-                    }
+                      ),
+                    ));
                   }),
               //end proses
 
               //selesai pelunasan
               ListView.builder(
                   padding: const EdgeInsets.all(10),
-                  itemCount: data3 == null ? 0 : data3.length,
-                  itemBuilder: (context, index) {
-                    if (data3.length == null) {
-                      return Text("Tidak ada Transaksi Proses");
-                    } else {
-                      return Container(
-                          child: Card(
-                        shadowColor: Colors.black,
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [primaryColor, primaryColor],
-                            ),
-                          ),
-                          padding: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data3[index]['waktu'],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  Text(
-                                    "Selesai",
-                                    style: TextStyle(
-                                        color: Color(0xFF414460),
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 12),
-                                  )
-                                ],
-                              ),
-                              Divider(
-                                color: Color(0xFF8D99AE),
-                                thickness: 1,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data3[index]['nama_barang'],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  ),
-                                  Text(
-                                    data3[index]['qty'],
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      data3[index]['harga'],
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 12),
-                                    ),
-                                  ]),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Divider(
-                                color: Color(0xFF8D99AE),
-                                thickness: 1,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      data3[index]['total'],
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14),
-                                    ),
-                                  ]),
-                              Divider(
-                                color: Color(0xFF8D99AE),
-                                thickness: 1,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Get.to(() => faktur());
-                                    },
-                                    child: Text(
-                                      "Pelunasan",
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                        primary: ThirdColor,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5))),
-                                  ),
-                                ],
-                              )
-                            ],
+                  itemCount: _list3.length,
+                  itemBuilder: (context, i) {
+                    final x = _list3[i];
+                    return Container(
+                        child: Card(
+                      shadowColor: Colors.black,
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [primaryColor, primaryColor],
                           ),
                         ),
-                      ));
-                    }
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  x.waktu,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                                Text(
+                                  "Selesai",
+                                  style: TextStyle(
+                                      color: Color(0xFF414460),
+                                      fontWeight: FontWeight.w200,
+                                      fontSize: 12),
+                                )
+                              ],
+                            ),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            //COBA
+                            ListView.builder(
+                                shrinkWrap: true,
+                                padding: const EdgeInsets.all(10),
+                                itemCount: x.barang.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                      child: Card(
+                                          shadowColor: Colors.black,
+                                          clipBehavior: Clip.antiAlias,
+                                          elevation: 8,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  primaryColor,
+                                                  primaryColor
+                                                ],
+                                              ),
+                                            ),
+                                            padding: EdgeInsets.all(10),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        x.barang[index]
+                                                            .namaBarang
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                            fontSize: 12),
+                                                      ),
+                                                      Text(
+                                                        x.barang[index].qty
+                                                            .toString(),
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                            fontSize: 12),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          x.barang[index]
+                                                              .subTotal
+                                                              .toString(),
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              fontSize: 12),
+                                                        ),
+                                                      ]),
+                                                ]),
+                                          )));
+                                }),
+
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    x.total,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
+                                  ),
+                                ]),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.to(() => faktur());
+                                  },
+                                  child: Text(
+                                    "Pelunasan",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                        letterSpacing: 2),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: ThirdColor,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 10),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5))),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ));
                   }),
               //end selesai
 
               //Riwayat
               ListView.builder(
                   padding: const EdgeInsets.all(10),
-                  itemCount: data4 == null ? 0 : data4.length,
-                  itemBuilder: (context, index) {
-                    if (data4.length == null) {
-                      return Text("Tidak ada Transaksi Proses");
-                    } else {
-                      return Container(
-                          child: Card(
-                        shadowColor: Colors.black,
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [primaryColor, primaryColor],
-                            ),
-                          ),
-                          padding: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data4[index]['waktu'],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  Text(
-                                    data4[index]['kode_transaksi'],
-                                    style: TextStyle(
-                                        color: Color(0xFF414460),
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 12),
-                                  )
-                                ],
-                              ),
-                              Divider(
-                                color: Color(0xFF8D99AE),
-                                thickness: 1,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data4[index]['nama_barang'],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  ),
-                                  Text(
-                                    data4[index]['qty'],
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Divider(
-                                color: Color(0xFF8D99AE),
-                                thickness: 1,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Get.to(() => Riwayat());
-                                    },
-                                    child: Text(
-                                      "Detail Pesanan",
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                        primary: ThirdColor,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5))),
-                                  ),
-                                ],
-                              )
-                            ],
+                  itemCount: _list4.length,
+                  itemBuilder: (context, i) {
+                    final x = _list4[i];
+
+                    return Container(
+                        child: Card(
+                      shadowColor: Colors.black,
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [primaryColor, primaryColor],
                           ),
                         ),
-                      ));
-                    }
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  x.waktu,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                                Text(
+                                  x.kodeTransaksi,
+                                  style: TextStyle(
+                                      color: Color(0xFF414460),
+                                      fontWeight: FontWeight.w200,
+                                      fontSize: 12),
+                                )
+                              ],
+                            ),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                padding: const EdgeInsets.all(10),
+                                itemCount: x.barang.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                      child: Card(
+                                          shadowColor: Colors.black,
+                                          clipBehavior: Clip.antiAlias,
+                                          elevation: 8,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  primaryColor,
+                                                  primaryColor
+                                                ],
+                                              ),
+                                            ),
+                                            padding: EdgeInsets.all(10),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        x.barang[index]
+                                                            .namaBarang
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                            fontSize: 12),
+                                                      ),
+                                                      Text(
+                                                        x.barang[index].qty
+                                                            .toString(),
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                            fontSize: 12),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                ]),
+                                          )));
+                                }),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Divider(
+                              color: Color(0xFF8D99AE),
+                              thickness: 1,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.to(() => Riwayat());
+                                  },
+                                  child: Text(
+                                    "Detail Pesanan",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                        letterSpacing: 2),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: ThirdColor,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 10),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5))),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ));
                   })
             ])));
     //Riwayat

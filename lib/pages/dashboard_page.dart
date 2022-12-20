@@ -11,21 +11,8 @@ class _DashboardState extends State<Dashboard> {
 
   double currentPage = 0;
   late String id;
-  late Future<tanggal> futuretanggal;
-  var data;
-  Future<tanggal> fetchtanggal() async {
-    final response = await http.get(Uri.parse(API.selecttanggal));
 
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      return tanggal.fromJson(jsonDecode(response.body));
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
-    }
-  }
+  var data;
 
   Future getDataTanggal() async {
     // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON
@@ -55,14 +42,6 @@ class _DashboardState extends State<Dashboard> {
   //indicator handler
   @override
   void initState() {
-    //pagecontroller dibuat selalu listening
-    //setiap pageview discrollke samping maka akan mengambil index page
-    // _pageController.addListener(() {
-    //   setState(() {
-    //     currentPage = _pageController.page!.toDouble();
-    //     print(currentPage);
-    //   });
-    // });
     super.initState();
     getDataTanggal();
     // futuretanggal = fetchtanggal();
@@ -185,14 +164,6 @@ class _DashboardState extends State<Dashboard> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(20),
-                      // child: Text(
-                      //   'Kemeja Lengan Panjang',
-                      //   textAlign: TextAlign.center,
-                      //   style: TextStyle(
-                      //       fontSize: 14,
-                      //       color: SecondaryColor,
-                      //       fontWeight: FontWeight.bold),
-                      // ),
                       margin: EdgeInsets.only(right: 15),
                       width: 200,
                       height: 350,

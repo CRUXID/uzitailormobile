@@ -12,13 +12,15 @@ class _TransaksiState extends State<Transaksi> {
 
   String? _namabarang;
   String? selected2;
+  String? kode;
   List data = [];
   List<trx> dataTransaksi = [];
   int totaltransaksi = 0;
   List<dynamic> databarang = [];
   late String id;
   var dateNow = DateTime.now();
-  var kode = DateFormat('yyMMddss').format(DateTime.now());
+  var kodetrx = DateFormat('yyMMddhhmmss').format(DateTime.now());
+  var kooode = '';
 
   inserttrx() async {
     User? currentUserInfo;
@@ -29,6 +31,7 @@ class _TransaksiState extends State<Transaksi> {
       currentUserInfo = User.fromJson(userDataMap);
       setState(() {
         id = currentUserInfo?.id.toString() ?? "";
+        kooode = kodetrx.toString();
       });
       print(id);
     }
@@ -36,30 +39,65 @@ class _TransaksiState extends State<Transaksi> {
       var res = await http.post(
         Uri.parse(API.inserttrx),
         body: {
-          'kode_transaksi': kode.toString(),
+          'kode_transaksi': kodetrx.toString(),
           'waktu': dateNow.toString(),
           'id_pembeli': id.toString(),
           'total': totaltransaksi.toString(),
         },
       );
+      print('ini insert transaksi ${res.body}');
 
       if (res.statusCode == 200) //Connection with API to server is succes
       {
         var result = jsonDecode(res.body);
 
         if (result['Berhasil'] == true) {
-          // Fungsi pindah Activity dari Login ke Dashboard
-          Future.delayed(Duration(milliseconds: 2), () {
-            Fluttertoast.showToast(msg: "Berhasil Melakukan Transaksi");
-            print("Berhasil");
-          });
-        } else {
-          Fluttertoast.showToast(msg: "Gagal menambah transaksi");
+          Fluttertoast.showToast(msg: "Berhasil Melakukan Transaksi");
+          print("Berhasil");
         }
+        ;
+      } else {
+        Fluttertoast.showToast(msg: "Gagal menambah transaksi");
       }
     } catch (errorMsg) {
       Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
       print("Error :: " + errorMsg.toString());
+    }
+  }
+
+  insertbarang(List<trx> list) async {
+    for (var i = 0; i < list.length; i++) {
+      try {
+        var res = await http.post(
+          Uri.parse(API.insertdetailtrx),
+          body: {
+            'kode_transaksi': kooode.toString(),
+            'kode_barang': list[i].kodebrg,
+            'qty': list[i].qty,
+            'sub_total': list[i].harga,
+            'catatan': 'kosong',
+          },
+        );
+        print('ini insert barang ${res.body}');
+        print('<<<<<<<<$kooode');
+        // if (res.statusCode == 200) //Connection with API to server is succes
+        // {
+        //   var result = jsonDecode(res.body);
+
+        //   if (result['Berhasil'] == true) {
+        //     // Fungsi pindah Activity dari Login ke Dashboard
+        //     Future.delayed(Duration(milliseconds: 2), () {
+        //       Fluttertoast.showToast(msg: "Berhasil Melakukan Transaksi");
+        //       print("Berhasil");
+        //     });
+        //   } else {
+        //     Fluttertoast.showToast(msg: "Gagal menambah transaksi");
+        //   }
+        // }
+      } catch (errorMsg) {
+        Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
+        print("Error :: " + errorMsg.toString());
+      }
     }
   }
 
@@ -68,11 +106,10 @@ class _TransaksiState extends State<Transaksi> {
       var res = await http.post(
         Uri.parse(API.inserttrx),
         body: {
-          'kode_transaksi': kode.toString(),
-          'kode_barang': dateNow.toString(),
-          'qty': id.toString(),
-          'sub_total': totaltransaksi.toString(),
-          'catatan': totaltransaksi.toString(),
+          'kode_transaksi': kodetrx.toString(),
+          'kode_barang': kodebrg.toString(),
+          'qty': qty.toString(),
+          'sub_total': harga.toString(),
         },
       );
 
@@ -101,8 +138,8 @@ class _TransaksiState extends State<Transaksi> {
       int barangqty = int.parse(qty.text);
       int barangharga = int.parse(harga.text);
       int total = barangqty * barangharga;
-      dataTransaksi
-          .add(trx(qty.text, _namabarang.toString(), total.toString()));
+      dataTransaksi.add(trx(kodebrg.text.toString(), qty.text,
+          _namabarang.toString(), total.toString()));
       totaltransaksi += total;
       print(dataTransaksi.length);
       print(totaltransaksi);
@@ -110,12 +147,10 @@ class _TransaksiState extends State<Transaksi> {
     //alert dialog
     AlertDialog alertDialog = AlertDialog(
       content: Container(
-        height: 200,
+        height: 100,
         child: Column(
           children: [
-            Text("Nama Barang: $_namabarang"),
-            Text("Jenis Kain : $selected2"),
-            Text("Qty : ${qty.text}"),
+            Text("Berhasil Tambah Data"),
             //padding
             const Padding(padding: EdgeInsets.all(10)),
             //button
@@ -151,7 +186,7 @@ class _TransaksiState extends State<Transaksi> {
     });
     print(databarang);
     print(dateNow);
-    print(kode);
+    print(kodetrx);
   }
 
   void initState() {
@@ -171,6 +206,7 @@ class _TransaksiState extends State<Transaksi> {
   //controller qty
   TextEditingController qty = TextEditingController();
   TextEditingController harga = TextEditingController();
+  TextEditingController kodebrg = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -232,8 +268,24 @@ class _TransaksiState extends State<Transaksi> {
                           .indexWhere((item) => item["nama_barang"] == value);
                       print("$value");
                       harga.text = databarang[index]['harga'];
+                      kodebrg.text = databarang[index]['kode_barang'];
                     });
                   },
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: kodebrg,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    labelText: 'Harga',
+                    //icon qty
+                    prefixIcon: Icon(Icons.attach_money),
+                  ),
+                  keyboardType: TextInputType.number,
                 ),
               ),
               Container(
@@ -246,7 +298,7 @@ class _TransaksiState extends State<Transaksi> {
                     ),
                     labelText: 'Harga',
                     //icon qty
-                    prefixIcon: Icon(Icons.format_list_numbered),
+                    prefixIcon: Icon(Icons.attach_money),
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -398,6 +450,13 @@ class _TransaksiState extends State<Transaksi> {
                                 fontSize: 11,
                                 fontWeight: FontWeight.w300,
                                 color: primaryColor),
+                          ),
+                          Text(
+                            "Ke Nomer Rekening (BRI)3266563325526",
+                            style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor),
                           )
                         ],
                       ),
@@ -413,8 +472,9 @@ class _TransaksiState extends State<Transaksi> {
                 child: ElevatedButton(
                   //change color button
                   style: ElevatedButton.styleFrom(primary: Color(0xFF2B2D42)),
-                  onPressed: () {
-                    inserttrx();
+                  onPressed: () async {
+                    await inserttrx();
+                    await insertbarang(dataTransaksi);
                   },
                   child: const Text('Pesan'),
                 ),
