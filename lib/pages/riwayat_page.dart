@@ -9,25 +9,42 @@ class Riwayat extends StatefulWidget {
 
 class _RiwayatState extends State<Riwayat> {
   List data = [];
-  List<dynamic> dataRiwayat = [];
-  Future _getData() async {
-    var response = await http.get(Uri.parse(API.selectRiwayat),
-        headers: {"Accept": "application/json"});
-    var jsonBody = response.body;
-    final List<dynamic> jsonData = jsonDecode(jsonBody);
+  List<RiwayatModel> _listRiwayat = [];
+  var loading = false;
+  late String id;
+  var kodeTRX = Get.arguments;
+  dynamic history;
+  User? currentUserInfo;
 
+  Future<dynamic> _ambildataRiwayat() async {
     setState(() {
-      data = jsonData as List;
-      dataRiwayat = jsonData;
+      loading = true;
     });
-    print(dataRiwayat);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    if (userinfo != null) {
+      Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+      currentUserInfo = User.fromJson(userDataMap);
+      setState(() {
+        id = currentUserInfo?.id.toString() ?? "";
+      });
+      print(id);
+    }
+    final response = await http.post(Uri.parse(API.selectRiwayat),
+        body: {"id_pembeli": id, "kode_transaksi": Get.arguments[0]});
+    if (response.statusCode == 200) {
+      history = jsonDecode(response.body);
+      //_listRiwayat.add(RiwayatModel.fromJson(Riwayat));
+      loading = false;
+      print('Riwayat $history');
+    }
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getData();
+    _ambildataRiwayat();
   }
 
   @override
@@ -42,7 +59,7 @@ class _RiwayatState extends State<Riwayat> {
         padding: const EdgeInsets.all(15),
         children: <Widget>[
           Text(
-            "No Transaksi: 20221130001",
+            'No transaksi : ' + history['kode_transaksi'],
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Divider(
@@ -68,12 +85,12 @@ class _RiwayatState extends State<Riwayat> {
             height: 8,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text('Rp. 220.000',
+            Text('Rp.' + history['dibayar'],
                 style: TextStyle(
                     color: SixthColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 14)),
-            Text('2022/10/20',
+            Text(history['waktu'],
                 style: TextStyle(
                     color: SixthColor,
                     fontWeight: FontWeight.bold,
@@ -98,7 +115,7 @@ class _RiwayatState extends State<Riwayat> {
             height: 8,
           ),
           Text(
-            "Thoriq Lukman Hakim",
+            currentUserInfo?.nama.toString() ?? "",
             style: TextStyle(
                 color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
           ),
@@ -106,7 +123,7 @@ class _RiwayatState extends State<Riwayat> {
             height: 5,
           ),
           Text(
-            "081231910408",
+            currentUserInfo?.nohp.toString() ?? "",
             style: TextStyle(
                 color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
           ),
@@ -114,20 +131,12 @@ class _RiwayatState extends State<Riwayat> {
             height: 5,
           ),
           Text(
-            "Perumahan Argopuro Blok B No.7",
+            currentUserInfo?.alamat.toString() ?? "",
             style: TextStyle(
                 color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
           ),
           SizedBox(
-            height: 5,
-          ),
-          Text(
-            "SUMBERSARI, KAB.JEMBER, JAWA TIMUR 68121",
-            style: TextStyle(
-                color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
-          ),
-          SizedBox(
-            height: 13,
+            height: 8,
           ),
           Divider(
             color: FifthColor,
@@ -144,85 +153,69 @@ class _RiwayatState extends State<Riwayat> {
           SizedBox(
             height: 8,
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text('Kaos Lengan Pendek',
-                style: TextStyle(
-                    color: SixthColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12)),
-            Text('x24',
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12)),
-          ]),
-          SizedBox(
-            height: 10,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text('Note : warna pink magenta',
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12)),
-            Text('Rp.10.000',
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12)),
-          ]),
-          SizedBox(
-            height: 10,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            Text('Rp. 240.000',
-                style: TextStyle(
-                    color: SixthColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12))
-          ]),
-          SizedBox(
-            height: 20,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text('Kaos Lengan Panjang',
-                style: TextStyle(
-                    color: SixthColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12)),
-            Text('x20',
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12)),
-          ]),
-          SizedBox(
-            height: 10,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text('Note : warna pink magenta',
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12)),
-            Text('Rp.10.000',
-                style: TextStyle(
-                    color: FifthColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12)),
-          ]),
-          SizedBox(
-            height: 10,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            Text('Rp. 200.000',
-                style: TextStyle(
-                    color: SixthColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12))
-          ]),
-          SizedBox(
-            height: 13,
+          Column(
+            children: [
+              ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: history['barang'].length,
+                  itemBuilder: (context, index) {
+                    return Column(children: <Widget>[
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(history['barang'][index]['nama_barang'],
+                                style: TextStyle(
+                                    color: SixthColor,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12)),
+                            Text(history['barang'][index]['qty'],
+                                style: TextStyle(
+                                    color: FifthColor,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12)),
+                          ]),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Text('Catatan : ',
+                                    style: TextStyle(
+                                        color: FifthColor,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 12)),
+                                Text(
+                                    history['barang'][index]['catatan'] ??
+                                        " - ",
+                                    style: TextStyle(
+                                        color: FifthColor,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 12)),
+                              ],
+                            ),
+                            Text(history['barang'][index]['harga'],
+                                style: TextStyle(
+                                    color: FifthColor,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12)),
+                          ]),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                        Text('Rp. ' + history['barang'][index]['sub_total'],
+                            style: TextStyle(
+                                color: SixthColor,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12))
+                      ]),
+                    ]);
+                  }),
+            ],
           ),
           Divider(
             color: FifthColor,
@@ -237,7 +230,7 @@ class _RiwayatState extends State<Riwayat> {
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
                     fontSize: 14)),
-            Text('Rp.440.000',
+            Text('Rp. ' + history['total'],
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
@@ -252,7 +245,7 @@ class _RiwayatState extends State<Riwayat> {
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
                     fontSize: 14)),
-            Text('-Rp.220.000',
+            Text('Rp. ' + history['dibayar'],
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
@@ -267,7 +260,7 @@ class _RiwayatState extends State<Riwayat> {
                     color: SixthColor,
                     fontWeight: FontWeight.w400,
                     fontSize: 14)),
-            Text('Rp.220.000',
+            Text('Rp. ' + history['dibayar'],
                 style: TextStyle(
                     color: SixthColor,
                     fontWeight: FontWeight.w400,
@@ -289,7 +282,7 @@ class _RiwayatState extends State<Riwayat> {
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
                     fontSize: 14)),
-            Text('2022/10/20',
+            Text(history['waktu'],
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
@@ -304,7 +297,7 @@ class _RiwayatState extends State<Riwayat> {
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
                     fontSize: 14)),
-            Text('2022/10/20',
+            Text(history['waktu'],
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
@@ -319,7 +312,7 @@ class _RiwayatState extends State<Riwayat> {
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
                     fontSize: 14)),
-            Text('2022/10/27',
+            Text(history['tgl_jadi'],
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
@@ -334,7 +327,7 @@ class _RiwayatState extends State<Riwayat> {
                     color: FifthColor,
                     fontWeight: FontWeight.w300,
                     fontSize: 14)),
-            Text('2022/10/27',
+            Text(history['tgl_jadi'],
                 style: TextStyle(
                     color: FifthColor,
                     fontWeight: FontWeight.w300,

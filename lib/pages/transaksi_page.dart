@@ -334,6 +334,7 @@ class _TransaksiState extends State<Transaksi> {
                 ),
               ),
               ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(10),
                   itemCount: dataTransaksi.length,

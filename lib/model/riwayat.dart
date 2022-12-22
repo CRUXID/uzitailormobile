@@ -1,40 +1,88 @@
-class riwayat {
-  final String kode;
-  final String waktu;
-  final String namabrg;
-  final String catatan;
-  final int subtotal;
-  final int qty;
-  final int harga;
-  final int total;
-  final int dibayar;
-  final int sisa;
+// To parse this JSON data, do
+//
+//     final fakturmodel = fakturmodelFromJson(jsonString);
 
-  const riwayat({
-    required this.kode,
+import 'package:meta/meta.dart';
+import 'dart:convert';
+
+RiwayatModel fakturmodelFromJson(String str) =>
+    RiwayatModel.fromJson(json.decode(str));
+
+String fakturmodelToJson(RiwayatModel data) => json.encode(data.toJson());
+
+class RiwayatModel {
+  RiwayatModel({
+    required this.kodeTransaksi,
     required this.waktu,
-    required this.namabrg,
-    required this.catatan,
-    required this.subtotal,
-    required this.qty,
-    required this.harga,
     required this.total,
     required this.dibayar,
-    required this.sisa,
+    required this.tglJadi,
+    required this.barang,
   });
 
-  factory riwayat.fromJson(Map<String, dynamic> json) {
-    return riwayat(
-      kode: json["kode_transaksi"],
-      waktu: json["waktu"],
-      namabrg: json["nama_barang"],
-      catatan: json["catatan"],
-      subtotal: int.parse(json["sub_total"]),
-      qty: int.parse(json["qty"]),
-      harga: int.parse(json["harga"]),
-      total: int.parse(json["total"]),
-      dibayar: int.parse(json["dibayar"]),
-      sisa: int.parse(json["sisa_pembayaran"]),
-    );
-  }
+  String kodeTransaksi;
+  String waktu;
+  String total;
+  String dibayar;
+  String tglJadi;
+  List<Barang> barang;
+
+  factory RiwayatModel.fromJson(Map<String, dynamic> json) => RiwayatModel(
+        kodeTransaksi: json["kode_transaksi"],
+        waktu: json["waktu"],
+        total: json["total"],
+        dibayar: json["dibayar"],
+        tglJadi: json["tgl_jadi"],
+        barang:
+            List<Barang>.from(json["barang"].map((x) => Barang.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "kode_transaksi": kodeTransaksi,
+        "waktu": "waktu",
+        "total": total,
+        "dibayar": dibayar,
+        "tgl_jadi": "tgl_jadi",
+        "barang": List<dynamic>.from(barang.map((x) => x.toJson())),
+      };
+}
+
+class Barang {
+  Barang({
+    required this.namaBarang,
+    required this.kodeBarang,
+    required this.harga,
+    required this.qty,
+    required this.subTotal,
+    required this.idPembeli,
+    required this.catatan,
+  });
+
+  String namaBarang;
+  String kodeBarang;
+  String harga;
+  String qty;
+  String subTotal;
+  String idPembeli;
+  dynamic catatan;
+
+  factory Barang.fromJson(Map<String, dynamic> json) => Barang(
+        namaBarang: json["nama_barang"],
+        kodeBarang: json["kode_barang"],
+        harga: json["harga"],
+        qty: json["qty"],
+        subTotal: json["sub_total"],
+        idPembeli: json["id_pembeli"],
+        catatan: json["catatan"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "nama_barang": namaBarang,
+        "kode_barang": kodeBarang,
+        "harga": harga,
+        "qty": qty,
+        "sub_total": subTotal,
+        "id_pembeli": idPembeli,
+        "catatan": catatan,
+      };
 }

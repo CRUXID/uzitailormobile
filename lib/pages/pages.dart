@@ -31,7 +31,8 @@ import '../model/trx.dart';
 import '../model/user.dart';
 import 'package:uzitailor/pref/current_user.dart';
 import '../pref/user_pref.dart';
-import 'package:uzitailor/model/faktur.dart';
+import '../model/faktur.dart';
+import '../model/riwayat.dart';
 
 part 'welcome_pages.dart';
 part 'login_page.dart';

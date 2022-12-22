@@ -8,53 +8,15 @@ class _TrackingState extends State<Tracking>
     with SingleTickerProviderStateMixin {
   late int currentTab;
   late TabController _tabController = new TabController(length: 4, vsync: this);
-  List data = [];
-  List data2 = [];
-  List data21 = [];
-  List datacoba = [];
-  List datacoba2 = [];
-  List data3 = [];
-  List data4 = [];
+
   late String id;
   List<Trackstatus> _list1 = [];
   List<Trackstatus> _list2 = [];
   List<Trackstatus> _list3 = [];
   List<Trackstatus> _list4 = [];
 
-  List<Barang> _listbrg = [];
   var loading = false;
 
-  // Future<Trackstatus> fetchInfo() async {
-  //   User? currentUserInfo;
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   String? userinfo = preferences.getString("currentUser");
-  //   if (userinfo != null) {
-  //     Map<String, dynamic> userDataMap = jsonDecode(userinfo);
-  //     currentUserInfo = User.fromJson(userDataMap);
-  //     setState(() {
-  //       id = currentUserInfo?.id.toString() ?? "";
-  //     });
-  //     print(id);
-  //   }
-
-  //   var response = await http.post(Uri.parse(API.status1), body: {
-  //     "id_pembeli": id,
-  //   });
-  //   final jsonresponse = json.decode(response.body);
-  //   print('ini jsonresponse baru $jsonresponse');
-  //   return Trackstatus.fromJson(jsonresponse[0]);
-  // }
-  // Trackstatus track = Trackstatus();
-  // List<Barang> detail = [];
-
-  // getdatttaa() async {
-  //   await sevice().getService().then((value) {
-  //     setState(() {
-  //       track = value;
-  //       detail = track.barang;
-  //     });
-  //   });
-  // }
   Future<Null> _ambildata1() async {
     setState(() {
       loading = true;
@@ -70,7 +32,6 @@ class _TrackingState extends State<Tracking>
       });
       print(id);
     }
-
     final response = await http.post(Uri.parse(API.status1), body: {
       "id_pembeli": id,
     });
@@ -265,6 +226,7 @@ class _TrackingState extends State<Tracking>
                               ),
                               //COBA
                               ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   padding: const EdgeInsets.all(10),
                                   itemCount: x1.barang.length,
@@ -453,6 +415,7 @@ class _TrackingState extends State<Tracking>
                             ),
                             //COBA
                             ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 padding: const EdgeInsets.all(10),
                                 itemCount: x.barang.length,
@@ -584,7 +547,7 @@ class _TrackingState extends State<Tracking>
                   }),
               //end proses
 
-              //selesai pelunasan
+              //Mulai selesai
               ListView.builder(
                   padding: const EdgeInsets.all(10),
                   itemCount: _list3.length,
@@ -632,6 +595,7 @@ class _TrackingState extends State<Tracking>
                             ),
                             //COBA
                             ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 padding: const EdgeInsets.all(10),
                                 itemCount: x.barang.length,
@@ -739,7 +703,9 @@ class _TrackingState extends State<Tracking>
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    Get.to(() => faktur());
+                                    Get.to(faktur(),
+                                        duration: Duration(seconds: 1),
+                                        arguments: [x.kodeTransaksi]);
                                   },
                                   child: Text(
                                     "Pelunasan",
@@ -813,6 +779,7 @@ class _TrackingState extends State<Tracking>
                               thickness: 1,
                             ),
                             ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 padding: const EdgeInsets.all(10),
                                 itemCount: x.barang.length,
@@ -885,7 +852,8 @@ class _TrackingState extends State<Tracking>
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    Get.to(() => Riwayat());
+                                    Get.to(() => Riwayat(),
+                                        arguments: [x.kodeTransaksi]);
                                   },
                                   child: Text(
                                     "Detail Pesanan",

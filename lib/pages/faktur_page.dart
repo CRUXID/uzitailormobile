@@ -1,50 +1,44 @@
 part of 'pages.dart';
 
 class faktur extends StatefulWidget {
-  const faktur({super.key});
-
-  @override
   State<faktur> createState() => _fakturState();
 }
 
 class _fakturState extends State<faktur> {
-  late Future<fakturm> futurefaktur;
-  late Map<String, dynamic> faktur;
   List data = [];
-  List<dynamic> datafaktur = [];
+  late String id;
+  var loading = false;
+  var argument = Get.arguments;
+  dynamic faktur;
+  User? currentUserInfo;
 
-  Future<fakturm> fetchfaktur() async {
-    final response = await http.get(Uri.parse(API.selectfaktur));
-
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      return fakturm.fromJson(jsonDecode(response.body));
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
-    }
-  }
-
-  Future _getData() async {
-    var response = await http.get(Uri.parse(API.selectfaktur),
-        headers: {"Accept": "application/json"});
-    var jsonBody = response.body;
-    final List<dynamic> jsonData = jsonDecode(jsonBody);
-
+  Future<dynamic> _ambildata1() async {
     setState(() {
-      data = jsonData as List;
-      datafaktur = jsonData;
+      loading = true;
     });
-    print(datafaktur);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userinfo = preferences.getString("currentUser");
+    if (userinfo != null) {
+      Map<String, dynamic> userDataMap = jsonDecode(userinfo);
+      currentUserInfo = User.fromJson(userDataMap);
+      setState(() {
+        id = currentUserInfo?.id.toString() ?? "";
+      });
+      print(id);
+    }
+    final response = await http.post(Uri.parse(API.selectfaktur),
+        body: {"id_pembeli": id, "kode_transaksi": Get.arguments[0]});
+    if (response.statusCode == 200) {
+      faktur = jsonDecode(response.body);
+      loading = false;
+      print('data faktur $faktur');
+    }
   }
 
   @override
   void initState() {
+    _ambildata1();
     super.initState();
-    futurefaktur = fetchfaktur();
-    _getData();
   }
 
   @override
@@ -55,271 +49,231 @@ class _fakturState extends State<faktur> {
           centerTitle: true,
           backgroundColor: SecondaryColor,
         ),
-        body: Center(
-          child: FutureBuilder<fakturm>(
-            future: futurefaktur,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data!.kode);
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
-          ),
+        body: ListView(
+          padding: const EdgeInsets.all(10),
+          children: <Widget>[
+            Text(
+              faktur['kode_transaksi'],
+              textAlign: TextAlign.left,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Divider(
+              color: FifthColor,
+              thickness: 1,
+            ),
+            SizedBox(
+              height: 13,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('Total Pembayaran DP',
+                  style: TextStyle(
+                      color: SixthColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14)),
+              Text('Waktu Pembayaran DP',
+                  style: TextStyle(
+                      color: SixthColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14)),
+            ]),
+            SizedBox(
+              height: 8,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('Rp.${faktur['total']}',
+                  style: TextStyle(
+                      color: SixthColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14)),
+              Text(faktur['waktu'],
+                  style: TextStyle(
+                      color: SixthColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14)),
+            ]),
+            SizedBox(
+              height: 13,
+            ),
+            Divider(
+              color: FifthColor,
+              thickness: 1,
+            ),
+            SizedBox(
+              height: 13,
+            ),
+            Text(
+              "Rincian Pembeli",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 14, color: SixthColor),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              currentUserInfo?.nama.toString() ?? "",
+              style: TextStyle(
+                  color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              currentUserInfo?.nohp.toString() ?? "",
+              style: TextStyle(
+                  color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              currentUserInfo?.alamat.toString() ?? "",
+              style: TextStyle(
+                  color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
+            ),
+            SizedBox(
+              height: 13,
+            ),
+            Divider(
+              color: FifthColor,
+              thickness: 1,
+            ),
+            SizedBox(
+              height: 13,
+            ),
+            Text(
+              "Rincian Pesanan",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: SixthColor, fontSize: 14),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Column(
+              children: [
+                ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: faktur['barang'].length,
+                    itemBuilder: (context, index) {
+                      return Column(children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(faktur['barang'][index]['nama_barang'],
+                                  style: TextStyle(
+                                      color: SixthColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12)),
+                              Text(faktur['barang'][index]['qty'],
+                                  style: TextStyle(
+                                      color: FifthColor,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 12)),
+                            ]),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Text('Catatan : ',
+                                      style: TextStyle(
+                                          color: FifthColor,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12)),
+                                  Text(
+                                      faktur['barang'][index]['catatan'] ??
+                                          " - ",
+                                      style: TextStyle(
+                                          color: FifthColor,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12)),
+                                ],
+                              ),
+                              Text(faktur['barang'][index]['harga'],
+                                  style: TextStyle(
+                                      color: FifthColor,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 12)),
+                            ]),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                  'Rp. ' + faktur['barang'][index]['sub_total'],
+                                  style: TextStyle(
+                                      color: SixthColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12))
+                            ]),
+                      ]);
+                    }),
+              ],
+            ),
+            Divider(
+              color: FifthColor,
+              thickness: 1,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('Subtotal Barang',
+                  style: TextStyle(
+                      color: FifthColor,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14)),
+              Text(faktur['total'],
+                  style: TextStyle(
+                      color: FifthColor,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14)),
+            ]),
+            SizedBox(
+              height: 5,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('Total Pembayaran DP',
+                  style: TextStyle(
+                      color: FifthColor,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14)),
+              Text(faktur['dibayar'],
+                  style: TextStyle(
+                      color: FifthColor,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14)),
+            ]),
+            SizedBox(
+              height: 5,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('Total Pembayaran',
+                  style: TextStyle(
+                      color: SixthColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14)),
+              Text(faktur['dibayar'],
+                  style: TextStyle(
+                      color: SixthColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14)),
+            ]),
+            SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(1),
+                child: BarcodeWidget(
+                  barcode: Barcode.code128(),
+                  data: argument[0],
+                  drawText: false,
+                  width: double.infinity,
+                  height: 60,
+                )),
+          ],
         ));
-
-    //   ));; ListView(
-    //     padding: const EdgeInsets.all(15),
-    //     children: <Widget>[
-    //       Text(
-    //         'kdms',
-    //         style: TextStyle(fontWeight: FontWeight.bold),
-    //       ),
-    //       Divider(
-    //         color: FifthColor,
-    //         thickness: 1,
-    //       ),
-    //       SizedBox(
-    //         height: 13,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Total Pembayaran DP',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.w400,
-    //                 fontSize: 14)),
-    //         Text('Waktu Pembayaran DP',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.w400,
-    //                 fontSize: 14)),
-    //       ]),
-    //       SizedBox(
-    //         height: 8,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Rp. 220.000',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.bold,
-    //                 fontSize: 14)),
-    //         Text('2022/10/20',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.bold,
-    //                 fontSize: 14)),
-    //       ]),
-    //       SizedBox(
-    //         height: 13,
-    //       ),
-    //       Divider(
-    //         color: FifthColor,
-    //         thickness: 1,
-    //       ),
-    //       SizedBox(
-    //         height: 13,
-    //       ),
-    //       Text(
-    //         "Rincian Pembeli",
-    //         style: TextStyle(
-    //             fontWeight: FontWeight.bold, fontSize: 14, color: SixthColor),
-    //       ),
-    //       SizedBox(
-    //         height: 8,
-    //       ),
-    //       Text(
-    //         "Thoriq Lukman Hakim",
-    //         style: TextStyle(
-    //             color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
-    //       ),
-    //       SizedBox(
-    //         height: 5,
-    //       ),
-    //       Text(
-    //         "081231910408",
-    //         style: TextStyle(
-    //             color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
-    //       ),
-    //       SizedBox(
-    //         height: 5,
-    //       ),
-    //       Text(
-    //         "Perumahan Argopuro Blok B No.7",
-    //         style: TextStyle(
-    //             color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
-    //       ),
-    //       SizedBox(
-    //         height: 5,
-    //       ),
-    //       Text(
-    //         "SUMBERSARI, KAB.JEMBER, JAWA TIMUR 68121",
-    //         style: TextStyle(
-    //             color: SixthColor, fontWeight: FontWeight.w300, fontSize: 12),
-    //       ),
-    //       SizedBox(
-    //         height: 13,
-    //       ),
-    //       Divider(
-    //         color: FifthColor,
-    //         thickness: 1,
-    //       ),
-    //       SizedBox(
-    //         height: 13,
-    //       ),
-    //       Text(
-    //         "Rincian Pesanan",
-    //         style: TextStyle(
-    //             fontWeight: FontWeight.bold, color: SixthColor, fontSize: 14),
-    //       ),
-    //       SizedBox(
-    //         height: 8,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Kaos Lengan Pendek',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.w400,
-    //                 fontSize: 12)),
-    //         Text('x24',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 12)),
-    //       ]),
-    //       SizedBox(
-    //         height: 10,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Note : warna pink magenta',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 12)),
-    //         Text('Rp.10.000',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 12)),
-    //       ]),
-    //       SizedBox(
-    //         height: 10,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-    //         Text('Rp. 240.000',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.w400,
-    //                 fontSize: 12))
-    //       ]),
-    //       SizedBox(
-    //         height: 20,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Kaos Lengan Panjang',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.w400,
-    //                 fontSize: 12)),
-    //         Text('x20',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 12)),
-    //       ]),
-    //       SizedBox(
-    //         height: 10,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Note : warna pink magenta',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 12)),
-    //         Text('Rp.10.000',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 12)),
-    //       ]),
-    //       SizedBox(
-    //         height: 10,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-    //         Text('Rp. 200.000',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.w400,
-    //                 fontSize: 12))
-    //       ]),
-    //       SizedBox(
-    //         height: 13,
-    //       ),
-    //       Divider(
-    //         color: FifthColor,
-    //         thickness: 1,
-    //       ),
-    //       SizedBox(
-    //         height: 5,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Subtotal Barang',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 14)),
-    //         Text('Rp.440.000',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 14)),
-    //       ]),
-    //       SizedBox(
-    //         height: 5,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Total Pembayaran DP',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 14)),
-    //         Text('-Rp.220.000',
-    //             style: TextStyle(
-    //                 color: FifthColor,
-    //                 fontWeight: FontWeight.w300,
-    //                 fontSize: 14)),
-    //       ]),
-    //       SizedBox(
-    //         height: 5,
-    //       ),
-    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //         Text('Total Pembayaran',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.w400,
-    //                 fontSize: 14)),
-    //         Text('Rp.220.000',
-    //             style: TextStyle(
-    //                 color: SixthColor,
-    //                 fontWeight: FontWeight.w400,
-    //                 fontSize: 14)),
-    //       ]),
-    //       SizedBox(
-    //         height: 20,
-    //       ),
-    //       ClipRRect(
-    //           borderRadius: BorderRadius.circular(1),
-    //           child: BarcodeWidget(
-    //             barcode: Barcode.code128(),
-    //             data: 'asadaada',
-    //             drawText: false,
-    //             width: double.infinity,
-    //             height: 60,
-    //           )),
-    //     ],
-    //   ),
-    // );
   }
 }
