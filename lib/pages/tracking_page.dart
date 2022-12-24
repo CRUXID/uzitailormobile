@@ -17,7 +17,7 @@ class _TrackingState extends State<Tracking>
 
   var loading = false;
 
-  Future<Null> _ambildata1() async {
+  Future<dynamic> _ambildata1() async {
     setState(() {
       loading = true;
     });
@@ -47,7 +47,7 @@ class _TrackingState extends State<Tracking>
     }
   }
 
-  Future<Null> _ambildata2() async {
+  Future<dynamic> _ambildata2() async {
     setState(() {
       loading = true;
     });
@@ -78,7 +78,7 @@ class _TrackingState extends State<Tracking>
     }
   }
 
-  Future<Null> _ambildata3() async {
+  Future<dynamic> _ambildata3() async {
     setState(() {
       loading = true;
     });
@@ -109,7 +109,7 @@ class _TrackingState extends State<Tracking>
     }
   }
 
-  Future<Null> _ambildata4() async {
+  Future<dynamic> _ambildata4() async {
     setState(() {
       loading = true;
     });
@@ -142,11 +142,11 @@ class _TrackingState extends State<Tracking>
 
   @override
   void initState() {
-    super.initState();
     _ambildata1();
     _ambildata2();
     _ambildata3();
     _ambildata4();
+    super.initState();
   }
 
   @override
@@ -703,8 +703,7 @@ class _TrackingState extends State<Tracking>
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    Get.to(faktur(),
-                                        duration: Duration(seconds: 1),
+                                    Get.to(() => faktur(),
                                         arguments: [x.kodeTransaksi]);
                                   },
                                   child: Text(

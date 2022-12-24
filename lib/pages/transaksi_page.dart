@@ -210,6 +210,7 @@ class _TransaksiState extends State<Transaksi> {
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Transaksi'),
@@ -281,9 +282,9 @@ class _TransaksiState extends State<Transaksi> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    labelText: 'Harga',
+                    labelText: 'Kode Barang',
                     //icon qty
-                    prefixIcon: Icon(Icons.attach_money),
+                    prefixIcon: Icon(Icons.code),
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -307,7 +308,10 @@ class _TransaksiState extends State<Transaksi> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
+                  key: formKey,
                   controller: qty,
+                  validator: (val) =>
+                      val == "" ? "Masukkan Jumlah Barang" : null,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -328,7 +332,9 @@ class _TransaksiState extends State<Transaksi> {
                   //change color button
                   style: ElevatedButton.styleFrom(primary: Color(0xFF2B2D42)),
                   onPressed: () {
-                    kirimData();
+                    if (formKey.currentState!.validate()) {
+                      kirimData();
+                    }
                   },
                   child: const Text('Tambah'),
                 ),
