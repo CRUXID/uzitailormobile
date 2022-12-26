@@ -12,7 +12,7 @@ class _DashboardState extends State<Dashboard> {
   double currentPage = 0;
   late String id;
 
-  var data;
+  dynamic data;
 
   Future getDataTanggal() async {
     // MEMINTA DATA KE SERVER DENGAN KETENTUAN YANG DI ACCEPT ADALAH JSON

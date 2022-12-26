@@ -28,7 +28,6 @@ class _RiwayatState extends State<Riwayat> {
       setState(() {
         id = currentUserInfo?.id.toString() ?? "";
       });
-      print(id);
     }
     final response = await http.post(Uri.parse(API.selectRiwayat),
         body: {"id_pembeli": id, "kode_transaksi": Get.arguments[0]});
@@ -36,7 +35,7 @@ class _RiwayatState extends State<Riwayat> {
       history = jsonDecode(response.body);
       //_listRiwayat.add(RiwayatModel.fromJson(Riwayat));
       loading = false;
-      print('Riwayat $history');
+      return history;
     }
   }
 
@@ -58,7 +57,7 @@ class _RiwayatState extends State<Riwayat> {
         body: FutureBuilder(
             future: _ambildataRiwayat(),
             builder: (context, snapshot) {
-              if (snapshot.hasError) {
+              if (snapshot.data == null) {
                 return Center(child: CircularProgressIndicator());
               } else {
                 return ListView(
@@ -192,7 +191,8 @@ class _RiwayatState extends State<Riwayat> {
                                               color: SixthColor,
                                               fontWeight: FontWeight.w400,
                                               fontSize: 12)),
-                                      Text(history['barang'][index]['qty'],
+                                      Text(
+                                          'x.${history['barang'][index]['qty']}',
                                           style: TextStyle(
                                               color: FifthColor,
                                               fontWeight: FontWeight.w300,

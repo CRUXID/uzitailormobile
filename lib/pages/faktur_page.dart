@@ -27,6 +27,7 @@ class _fakturState extends State<faktur> {
       faktur = jsonDecode(response.body);
       loading = false;
       print(faktur);
+      return faktur;
     }
   }
 
@@ -48,19 +49,16 @@ class _fakturState extends State<faktur> {
           child: FutureBuilder(
               future: _ambildata1(),
               builder: (context, snapshot) {
-                if (snapshot.data == false) {
+                if (snapshot.data == null) {
                   return Center(child: CircularProgressIndicator());
                 } else {
-                  if (snapshot.connectionState == true) {
-                    print('hbjdkwkdw');
-                    return Center(child: CircularProgressIndicator());
-                  } else {
-                    return Container(
+                  return Center(
+                    child: Container(
                       child: ListView(
                           padding: const EdgeInsets.all(10),
                           children: <Widget>[
                             Text(
-                              faktur['kode_transaksi'],
+                              'No transaksi : ' + faktur['kode_transaksi'],
                               textAlign: TextAlign.left,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -192,14 +190,12 @@ class _fakturState extends State<faktur> {
                                                           FontWeight.w400,
                                                       fontSize: 12)),
                                               Text(
-                                                  faktur['barang'][index]
-                                                      ['qty'],
-                                                  style:
-                                                      TextStyle(
-                                                          color: FifthColor,
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                          fontSize: 12)),
+                                                  'x.${faktur['barang'][index]['qty']}',
+                                                  style: TextStyle(
+                                                      color: FifthColor,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      fontSize: 12)),
                                             ]),
                                         SizedBox(
                                           height: 10,
@@ -325,8 +321,8 @@ class _fakturState extends State<faktur> {
                                   height: 60,
                                 )),
                           ]),
-                    );
-                  }
+                    ),
+                  );
                 }
               }),
         ));

@@ -271,8 +271,7 @@ class _TrackingState extends State<Tracking>
                                                               fontSize: 12),
                                                         ),
                                                         Text(
-                                                          x1.barang[index].qty
-                                                              .toString(),
+                                                          'x${x1.barang[index].qty.toString()}',
                                                           textAlign:
                                                               TextAlign.end,
                                                           style: TextStyle(
@@ -294,9 +293,7 @@ class _TrackingState extends State<Tracking>
                                                                 .end,
                                                         children: [
                                                           Text(
-                                                            x1.barang[index]
-                                                                .subTotal
-                                                                .toString(),
+                                                            'Rp. ${x1.barang[index].subTotal.toString()}',
                                                             textAlign:
                                                                 TextAlign.end,
                                                             style: TextStyle(
@@ -323,7 +320,7 @@ class _TrackingState extends State<Tracking>
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      x1.total,
+                                      'Rp. ${x1.total}',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w400,
@@ -458,8 +455,7 @@ class _TrackingState extends State<Tracking>
                                                             fontSize: 12),
                                                       ),
                                                       Text(
-                                                        x.barang[index].qty
-                                                            .toString(),
+                                                        'x${x.barang[index].qty.toString()}',
                                                         textAlign:
                                                             TextAlign.end,
                                                         style: TextStyle(
@@ -478,9 +474,7 @@ class _TrackingState extends State<Tracking>
                                                           MainAxisAlignment.end,
                                                       children: [
                                                         Text(
-                                                          x.barang[index]
-                                                              .subTotal
-                                                              .toString(),
+                                                          'Rp. ${x.barang[index].subTotal.toString()}',
                                                           textAlign:
                                                               TextAlign.end,
                                                           style: TextStyle(
@@ -507,7 +501,7 @@ class _TrackingState extends State<Tracking>
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    x.total,
+                                    'Rp. ${x.total}',
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w400,
@@ -638,8 +632,7 @@ class _TrackingState extends State<Tracking>
                                                             fontSize: 12),
                                                       ),
                                                       Text(
-                                                        x.barang[index].qty
-                                                            .toString(),
+                                                        'x${x.barang[index].qty.toString()}',
                                                         textAlign:
                                                             TextAlign.end,
                                                         style: TextStyle(
@@ -658,9 +651,7 @@ class _TrackingState extends State<Tracking>
                                                           MainAxisAlignment.end,
                                                       children: [
                                                         Text(
-                                                          x.barang[index]
-                                                              .subTotal
-                                                              .toString(),
+                                                          'Rp. ${x.barang[index].subTotal.toString()}',
                                                           textAlign:
                                                               TextAlign.end,
                                                           style: TextStyle(
@@ -687,7 +678,7 @@ class _TrackingState extends State<Tracking>
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    x.total,
+                                    'Rp. ${x.total}',
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w400,
@@ -768,7 +759,7 @@ class _TrackingState extends State<Tracking>
                                   x.kodeTransaksi,
                                   style: TextStyle(
                                       color: Color(0xFF414460),
-                                      fontWeight: FontWeight.w200,
+                                      fontWeight: FontWeight.w500,
                                       fontSize: 12),
                                 )
                               ],
@@ -821,8 +812,7 @@ class _TrackingState extends State<Tracking>
                                                             fontSize: 12),
                                                       ),
                                                       Text(
-                                                        x.barang[index].qty
-                                                            .toString(),
+                                                        "x${x.barang[index].qty.toString()}",
                                                         textAlign:
                                                             TextAlign.end,
                                                         style: TextStyle(

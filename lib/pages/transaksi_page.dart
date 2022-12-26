@@ -332,9 +332,7 @@ class _TransaksiState extends State<Transaksi> {
                   //change color button
                   style: ElevatedButton.styleFrom(primary: Color(0xFF2B2D42)),
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      kirimData();
-                    }
+                    kirimData();
                   },
                   child: const Text('Tambah'),
                 ),
