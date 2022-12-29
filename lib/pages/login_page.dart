@@ -40,8 +40,7 @@ class _LoginState extends State<Login> {
             print(User);
           });
         } else {
-          Fluttertoast.showToast(msg: "Email Or Password Is Wrong");
-          print("jsdbskjdbka");
+          Fluttertoast.showToast(msg: "Email atau Password Salah");
         }
       }
     } catch (errorMsg) {

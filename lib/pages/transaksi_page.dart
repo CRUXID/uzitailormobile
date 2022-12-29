@@ -75,25 +75,11 @@ class _TransaksiState extends State<Transaksi> {
             'kode_barang': list[i].kodebrg,
             'qty': list[i].qty,
             'sub_total': list[i].harga,
-            'catatan': 'kosong',
+            'catatan': '-',
           },
         );
         print('ini insert barang ${res.body}');
         print('<<<<<<<<$kooode');
-        // if (res.statusCode == 200) //Connection with API to server is succes
-        // {
-        //   var result = jsonDecode(res.body);
-
-        //   if (result['Berhasil'] == true) {
-        //     // Fungsi pindah Activity dari Login ke Dashboard
-        //     Future.delayed(Duration(milliseconds: 2), () {
-        //       Fluttertoast.showToast(msg: "Berhasil Melakukan Transaksi");
-        //       print("Berhasil");
-        //     });
-        //   } else {
-        //     Fluttertoast.showToast(msg: "Gagal menambah transaksi");
-        //   }
-        // }
       } catch (errorMsg) {
         Fluttertoast.showToast(msg: "Error : " + errorMsg.toString());
         print("Error :: " + errorMsg.toString());
@@ -158,6 +144,9 @@ class _TransaksiState extends State<Transaksi> {
               child: Text("OK"),
               onPressed: () {
                 Navigator.pop(context);
+                kodebrg.clear();
+                harga.clear();
+                qty.clear();
                 Color:
                 Colors.purple;
               },

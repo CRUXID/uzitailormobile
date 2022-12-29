@@ -81,10 +81,8 @@ class _SettingState extends State<Setting> {
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
-                onPressed: () async {
-                  await RememberUserPrefs.removeUserInfo();
-                  Get.to(() => Login());
-                  Fluttertoast.showToast(msg: "Logout ");
+                onPressed: () {
+                  _showMyDialog();
                 },
                 icon: new Icon(
                   Icons.logout_outlined,
@@ -191,5 +189,41 @@ class _SettingState extends State<Setting> {
             ),
           ),
         ]));
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('Apakah anda yakin ingin Logout ? '),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Batal'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text('Ya'),
+              onPressed: () async {
+                print('Confirmed');
+                await RememberUserPrefs.removeUserInfo();
+                Get.to(() => Login());
+                Fluttertoast.showToast(msg: "Logout ");
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:uzitailor/pages/pages.dart';
 
 class API {
-  static const hostConnect2 = "http://10.212.242.106/uzitailor/API/apibaru/";
+  static const hostConnect2 = "https://uzi-tailor.wstif3a.id/API/";
 
   static const Login = "$hostConnect2/login1.php";
   static const Register = "$hostConnect2/register.php";
@@ -17,7 +17,4 @@ class API {
   static const status2 = "$hostConnect2/selectproses.php";
   static const status3 = "$hostConnect2/selectselesai.php";
   static const status4 = "$hostConnect2/selectriwayat.php";
-
-  static const hist =
-      "http://192.168.18.6.localhost/uzitailor/API/cek_login.php";
 }

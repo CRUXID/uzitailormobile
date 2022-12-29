@@ -27,7 +27,7 @@ class WelcomePage extends StatelessWidget {
             height: 15,
           ),
           Text(
-            "Halo \nSelamat Datang di Aplikasi Uzi Tailor ",
+            "Halo \nSelamat Datang di Aplikasi\nUzi Tailor ",
             style: FontIsi.copyWith(fontSize: 20),
             textAlign: TextAlign.center,
           ),
