@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
         var result = jsonDecode(res.body);
 
         if (result['Berhasil'] == true) {
-          Fluttertoast.showToast(msg: "Login Succesfully :)");
+          Fluttertoast.showToast(msg: "Login Succesfully");
 
           User userinfo = User.fromJson(result["userData"]);
 
@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
             print(User);
           });
         } else {
-          Fluttertoast.showToast(msg: "Email atau Password Salah");
+          Fluttertoast.showToast(msg: "Username atau Password Salah");
         }
       }
     } catch (errorMsg) {

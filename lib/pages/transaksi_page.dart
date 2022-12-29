@@ -266,6 +266,7 @@ class _TransaksiState extends State<Transaksi> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
+                  readOnly: true,
                   controller: kodebrg,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
@@ -282,6 +283,7 @@ class _TransaksiState extends State<Transaksi> {
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
                   controller: harga,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),

@@ -39,7 +39,6 @@ class _SettingState extends State<Setting> {
           Fluttertoast.showToast(msg: "Data berhasil di Edit");
         } else {
           Fluttertoast.showToast(msg: "Data Gagal Di Edit");
-          print("jsdbskjdbka");
         }
       }
     } catch (errorMsg) {
